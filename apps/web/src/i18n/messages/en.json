@@ -1,0 +1,377 @@
+{
+  "common": {
+    "appName": "ResumeForge AI",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "language": "Language",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "auth": {
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Start building a resume that gets past the bots.",
+      "name": "Full name",
+      "namePlaceholder": "Ada Lovelace",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "At least 8 characters",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "success": "Account created",
+      "error": "Could not create your account"
+    },
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to keep building your resume.",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "noAccount": "No account yet?",
+      "createOne": "Create one",
+      "success": "Signed in",
+      "error": "Could not sign in"
+    },
+    "errors": {
+      "name": "Tell us your name",
+      "email": "Enter a valid email address",
+      "password": "Password must be at least 8 characters",
+      "invalid": "Invalid input"
+    }
+  },
+  "dashboard": {
+    "title": "My Resumes",
+    "subtitle": "Build, enhance, and export your resume with AI assistance.",
+    "newResume": "New Resume",
+    "emptyTitle": "No resumes yet",
+    "emptyDescription": "Get started by creating a new resume.",
+    "emptyCta": "Create your first resume",
+    "loading": "Loading your resumes…",
+    "errorTitle": "My Resumes",
+    "errorDescription": "Couldn't load your resumes.",
+    "updated": "Updated",
+    "edit": "Edit",
+    "export": "Export",
+    "delete": "Delete",
+    "deleteAria": "Delete {title}",
+    "createSuccess": "Resume created!",
+    "createError": "Failed to create resume",
+    "deleteSuccess": "Resume deleted"
+  },
+  "builder": {
+    "loading": "Loading resume…",
+    "signInRequired": "Sign in required",
+    "signInToOpen": "Sign in to open this resume.",
+    "backToDashboard": "Back to dashboard",
+    "goToDashboard": "Go to Dashboard",
+    "resumeNotFound": "Resume not found",
+    "resumeNotFoundDescription": "The resume you are looking for does not exist or you do not have access.",
+    "resumeTitle": "Resume title",
+    "saving": "Saving…",
+    "allChangesSaved": "All changes saved",
+    "autosaveFailed": "Autosave failed — your changes are saved locally.",
+    "togglePreview": "Toggle preview",
+    "export": "Export",
+    "tabContent": "Content",
+    "tabTemplates": "Templates",
+    "tabDesign": "Design",
+    "chooseTemplate": "Choose a template",
+    "templateApplied": "Template applied"
+  },
+  "sections": {
+    "profile": {
+      "title": "Personal Information",
+      "hint": "Your name, headline and contact details. This always renders first."
+    },
+    "summary": {
+      "title": "Professional Summary",
+      "hint": "2-4 sentences covering your role, experience, and strongest skills."
+    },
+    "experience": {
+      "title": "Work Experience",
+      "hint": "Roles, companies, dates and impact bullets."
+    },
+    "education": {
+      "title": "Education",
+      "hint": "Degrees, institutions, grades and coursework."
+    },
+    "skills": {
+      "title": "Skills",
+      "hint": "Group related skills into categories."
+    },
+    "projects": {
+      "title": "Projects",
+      "hint": "Personal or professional work worth highlighting."
+    },
+    "achievements": {
+      "title": "Achievements",
+      "hint": "Awards, honours and notable accomplishments."
+    },
+    "certifications": {
+      "title": "Certifications",
+      "hint": "Credentials with issuer and date."
+    },
+    "publications": {
+      "title": "Publications",
+      "hint": "Papers, articles and conference talks."
+    },
+    "languages": {
+      "title": "Languages",
+      "hint": "Spoken and written languages with proficiency."
+    },
+    "volunteer": {
+      "title": "Volunteer Work",
+      "hint": "Community and volunteer contributions."
+    },
+    "interests": {
+      "title": "Interests",
+      "hint": "Hobbies and interests relevant to the role."
+    }
+  },
+  "editor": {
+    "title": "Content Editor",
+    "addLink": "Add link",
+    "removeTag": "Remove {tag}",
+    "achievementPlaceholder": "Describe an achievement with a metric…",
+    "addAchievement": "Add achievement",
+    "interestPlaceholder": "An interest relevant to the role…",
+    "addInterest": "Add interest"
+  },
+  "profile": {
+    "fullName": "Full Name",
+    "headline": "Headline",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "about": "About",
+    "aboutPlaceholder": "A short line shown in two-column templates.",
+    "links": "Links",
+    "linkLabelPlaceholder": "GitHub",
+    "linkUrlPlaceholder": "https://github.com/you"
+  },
+  "summary": {
+    "label": "Professional Summary",
+    "placeholder": "2-4 sentences covering your role, experience, and strongest skills…",
+    "enhance": "AI Enhance",
+    "enhancing": "Enhancing…",
+    "emptyError": "Add some summary text first",
+    "enhanced": "Summary enhanced",
+    "noResult": "No enhancement returned",
+    "failed": "AI enhancement failed"
+  },
+  "experience": {
+    "position": "Position",
+    "company": "Company",
+    "start": "Start",
+    "end": "End",
+    "location": "Location",
+    "highlights": "Highlights",
+    "addBullet": "Add bullet",
+    "addExperience": "Add experience",
+    "newRole": "New role"
+  },
+  "education": {
+    "degree": "Degree",
+    "institution": "Institution",
+    "start": "Start",
+    "end": "End",
+    "score": "Score / GPA",
+    "addEducation": "Add education",
+    "newDegree": "New degree"
+  },
+  "skills": {
+    "categoryPlaceholder": "Category (e.g. Languages)",
+    "tagPlaceholder": "Add a skill and press Enter",
+    "addCategory": "Add skill category"
+  },
+  "projects": {
+    "name": "Name",
+    "description": "Description",
+    "highlights": "Highlights",
+    "addBullet": "Add bullet",
+    "addProject": "Add project",
+    "newProject": "New project"
+  },
+  "lists": {
+    "emptyError": "Add some content first",
+    "enhanced": "Enhanced",
+    "failed": "AI enhancement failed"
+  },
+  "certifications": {
+    "name": "Name",
+    "issuer": "Issuer",
+    "date": "Date",
+    "add": "Add certification",
+    "newLabel": "Certification"
+  },
+  "publications": {
+    "title": "Title",
+    "publisher": "Publisher",
+    "date": "Date",
+    "add": "Add publication",
+    "newLabel": "Publication"
+  },
+  "languages": {
+    "namePlaceholder": "English",
+    "proficiencyPlaceholder": "Fluent",
+    "add": "Add language"
+  },
+  "volunteer": {
+    "role": "Role",
+    "organization": "Organization",
+    "start": "Start",
+    "end": "End",
+    "add": "Add volunteer role",
+    "newLabel": "Role"
+  },
+  "design": {
+    "title": "Design",
+    "reset": "Reset",
+    "accentColour": "Accent colour",
+    "useColour": "Use colour {colour}",
+    "fontFamily": "Font family",
+    "fontSize": "Font size",
+    "lineHeight": "Line height",
+    "uppercaseHeadings": "Uppercase headings",
+    "sectionRules": "Section rules"
+  },
+  "export": {
+    "title": "Export resume",
+    "description": "Choose a format. PDF and Word are ATS-compatible.",
+    "cancel": "Cancel",
+    "export": "Export",
+    "exporting": "Exporting…",
+    "pdf": {
+      "label": "PDF",
+      "description": "Print-quality, selectable text. ATS-safe."
+    },
+    "docx": {
+      "label": "Word (.docx)",
+      "description": "Fully editable in Microsoft Word or Google Docs."
+    },
+    "png": {
+      "label": "PNG image",
+      "description": "High-resolution image for sharing or portfolios."
+    },
+    "latex": {
+      "label": "LaTeX source",
+      "description": "Compile with pdflatex for typographic control."
+    },
+    "toasts": {
+      "pdf": "PDF export started — choose \"Save as PDF\" in the print dialog.",
+      "docx": "Word document downloaded",
+      "png": "PNG downloaded",
+      "latex": "LaTeX source downloaded",
+      "failed": "Export failed"
+    }
+  },
+  "templates": {
+    "all": "All",
+    "categories": {
+      "ats": "ATS",
+      "modern": "Modern",
+      "executive": "Executive",
+      "minimal": "Minimal",
+      "creative": "Creative"
+    },
+    "applied": "Template applied",
+    "items": {
+      "ats-classic": {
+        "name": "Classic ATS",
+        "description": "Single-column, plain text, ATS-friendly."
+      },
+      "ats-clean": {
+        "name": "Clean ATS",
+        "description": "Modern single-column with generous whitespace."
+      },
+      "modern-pro": {
+        "name": "Modern Professional",
+        "description": "Two-column layout with a tinted accent sidebar."
+      },
+      "executive": {
+        "name": "Executive",
+        "description": "Condensed layout, strong typography, ideal for senior roles."
+      },
+      "creative": {
+        "name": "Creative",
+        "description": "Bold colour palette, custom section ordering, two-column."
+      },
+      "minimal": {
+        "name": "Minimal",
+        "description": "Ultra-clean, no rules, maximum whitespace."
+      },
+      "technical": {
+        "name": "Technical",
+        "description": "Skill-first layout, ideal for software engineers."
+      },
+      "academic": {
+        "name": "Academic",
+        "description": "Publication-focused, suitable for researchers."
+      },
+      "sidebar-elegant": {
+        "name": "Sidebar Elegant",
+        "description": "Two-column with a tinted sidebar and generous spacing."
+      },
+      "banner-modern": {
+        "name": "Banner Modern",
+        "description": "Full-width accent banner at the top of the page."
+      },
+      "compact": {
+        "name": "Compact",
+        "description": "Tight spacing, fits more content on one page."
+      },
+      "classic-ats": {
+        "name": "Classic ATS",
+        "description": "ATS-friendly single-column with a bold header."
+      }
+    }
+  },
+  "preview": {
+    "livePreview": "Live Preview",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "resetZoom": "Reset zoom",
+    "defaultTemplate": "Classic ATS"
+  },
+  "landing": {
+    "badge": "Live resume builder with real AI",
+    "title": "The resume that gets past the filter",
+    "subtitle": "Write, rewrite and export a resume that clears both the recruiter's eyes and the ATS parser — with a live preview and AI that actually helps.",
+    "ctaPrimary": "Start building — it's free",
+    "ctaSecondary": "Sign in",
+    "features": {
+      "title": "Everything you need, in one editor",
+      "subtitle": "No copy-pasting between tools, no guessing what the parser wants.",
+      "liveTitle": "Live preview",
+      "liveDescription": "Every keystroke redraws the page exactly as it will export. Switch between twelve templates and watch the layout re-flow.",
+      "aiTitle": "AI that writes like you",
+      "aiDescription": "Sharpen your summary, turn duties into measurable impact, and expand thin bullet points — without the generic filler.",
+      "atsTitle": "ATS score you can act on",
+      "atsDescription": "See exactly which keywords, dates and sections the parser looks for, and what to fix first.",
+      "exportTitle": "Export anywhere",
+      "exportDescription": "PDF for applications, Word for editing, PNG for your portfolio, and LaTeX when you want typographic control.",
+      "privacyTitle": "Your data stays yours",
+      "privacyDescription": "Every resume is scoped to your account, served over TLS, and never shared with a third party."
+    },
+    "templatesTitle": "Twelve templates, from ATS-safe to expressive",
+    "templatesSubtitle": "Each one is built from the same content model, so switching never loses a word.",
+    "howTitle": "Three steps, no guesswork",
+    "step1Title": "Create your account",
+    "step1Description": "One email and a password. Your resumes are private to you from the first keystroke.",
+    "step2Title": "Fill in the editor",
+    "step2Description": "Section-by-section fields with hints, so you never have to remember what an ATS wants to see.",
+    "step3Title": "Score, refine, export",
+    "step3Description": "Run the ATS check, apply the suggestions, then export a file that is ready to send.",
+    "finalCta": "Create your first resume",
+    "footerTagline": "ResumeForge AI — build, enhance and export a resume that gets read."
+  }
+}

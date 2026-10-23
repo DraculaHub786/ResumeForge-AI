@@ -1,0 +1,377 @@
+{
+  "common": {
+    "appName": "ResumeForge AI",
+    "loading": "Chargement…",
+    "retry": "Réessayer",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "language": "Langue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
+  },
+  "auth": {
+    "register": {
+      "title": "Créez votre compte",
+      "subtitle": "Commencez à créer un CV qui passe les robots.",
+      "name": "Nom complet",
+      "namePlaceholder": "Ada Lovelace",
+      "email": "E-mail",
+      "emailPlaceholder": "you@example.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Au moins 8 caractères",
+      "submit": "Créer le compte",
+      "submitting": "Création du compte…",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "signInLink": "Se connecter",
+      "success": "Compte créé",
+      "error": "Impossible de créer votre compte"
+    },
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Connectez-vous pour continuer à créer votre CV.",
+      "email": "E-mail",
+      "emailPlaceholder": "you@example.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Se connecter",
+      "submitting": "Connexion…",
+      "noAccount": "Pas encore de compte ?",
+      "createOne": "En créer un",
+      "success": "Connecté",
+      "error": "Impossible de vous connecter"
+    },
+    "errors": {
+      "name": "Indiquez votre nom",
+      "email": "Saisissez une adresse e-mail valide",
+      "password": "Le mot de passe doit contenir au moins 8 caractères",
+      "invalid": "Saisie invalide"
+    }
+  },
+  "dashboard": {
+    "title": "Mes CV",
+    "subtitle": "Créez, améliorez et exportez votre CV avec l'aide de l'IA.",
+    "newResume": "Nouveau CV",
+    "emptyTitle": "Aucun CV pour le moment",
+    "emptyDescription": "Commencez par créer un nouveau CV.",
+    "emptyCta": "Créez votre premier CV",
+    "loading": "Chargement de vos CV…",
+    "errorTitle": "Mes CV",
+    "errorDescription": "Impossible de charger vos CV.",
+    "updated": "Mis à jour",
+    "edit": "Modifier",
+    "export": "Exporter",
+    "delete": "Supprimer",
+    "deleteAria": "Supprimer {title}",
+    "createSuccess": "CV créé !",
+    "createError": "Échec de la création du CV",
+    "deleteSuccess": "CV supprimé"
+  },
+  "builder": {
+    "loading": "Chargement du CV…",
+    "signInRequired": "Connexion requise",
+    "signInToOpen": "Connectez-vous pour ouvrir ce CV.",
+    "backToDashboard": "Retour au tableau de bord",
+    "goToDashboard": "Aller au tableau de bord",
+    "resumeNotFound": "CV introuvable",
+    "resumeNotFoundDescription": "Le CV que vous cherchez n'existe pas ou vous n'y avez pas accès.",
+    "resumeTitle": "Titre du CV",
+    "saving": "Enregistrement…",
+    "allChangesSaved": "Toutes les modifications sont enregistrées",
+    "autosaveFailed": "Échec de l'enregistrement automatique — vos modifications sont enregistrées localement.",
+    "togglePreview": "Afficher ou masquer l'aperçu",
+    "export": "Exporter",
+    "tabContent": "Contenu",
+    "tabTemplates": "Modèles",
+    "tabDesign": "Design",
+    "chooseTemplate": "Choisissez un modèle",
+    "templateApplied": "Modèle appliqué"
+  },
+  "sections": {
+    "profile": {
+      "title": "Informations personnelles",
+      "hint": "Votre nom, votre titre et vos coordonnées. Cette section apparaît toujours en premier."
+    },
+    "summary": {
+      "title": "Résumé professionnel",
+      "hint": "2 à 4 phrases couvrant votre poste, votre expérience et vos principales compétences."
+    },
+    "experience": {
+      "title": "Expérience professionnelle",
+      "hint": "Postes, entreprises, dates et réalisations."
+    },
+    "education": {
+      "title": "Formation",
+      "hint": "Diplômes, établissements, notes et cours suivis."
+    },
+    "skills": {
+      "title": "Compétences",
+      "hint": "Regroupez les compétences apparentées par catégories."
+    },
+    "projects": {
+      "title": "Projets",
+      "hint": "Travaux personnels ou professionnels à mettre en avant."
+    },
+    "achievements": {
+      "title": "Réalisations",
+      "hint": "Prix, distinctions et accomplissements notables."
+    },
+    "certifications": {
+      "title": "Certifications",
+      "hint": "Attestations avec l'organisme émetteur et la date."
+    },
+    "publications": {
+      "title": "Publications",
+      "hint": "Articles, écrits et présentations en conférence."
+    },
+    "languages": {
+      "title": "Langues",
+      "hint": "Langues parlées et écrites avec votre niveau."
+    },
+    "volunteer": {
+      "title": "Bénévolat",
+      "hint": "Engagements associatifs et bénévolat."
+    },
+    "interests": {
+      "title": "Centres d'intérêt",
+      "hint": "Loisirs et centres d'intérêt pertinents pour le poste."
+    }
+  },
+  "editor": {
+    "title": "Éditeur de contenu",
+    "addLink": "Ajouter un lien",
+    "removeTag": "Supprimer {tag}",
+    "achievementPlaceholder": "Décrivez une réalisation avec un indicateur…",
+    "addAchievement": "Ajouter une réalisation",
+    "interestPlaceholder": "Un centre d'intérêt pertinent pour le poste…",
+    "addInterest": "Ajouter un centre d'intérêt"
+  },
+  "profile": {
+    "fullName": "Nom complet",
+    "headline": "Titre",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "location": "Localisation",
+    "about": "À propos",
+    "aboutPlaceholder": "Une courte ligne affichée dans les modèles à deux colonnes.",
+    "links": "Liens",
+    "linkLabelPlaceholder": "GitHub",
+    "linkUrlPlaceholder": "https://github.com/you"
+  },
+  "summary": {
+    "label": "Résumé professionnel",
+    "placeholder": "2 à 4 phrases couvrant votre poste, votre expérience et vos principales compétences…",
+    "enhance": "Améliorer avec l'IA",
+    "enhancing": "Amélioration…",
+    "emptyError": "Saisissez d'abord du texte dans le résumé",
+    "enhanced": "Résumé amélioré",
+    "noResult": "Aucune amélioration renvoyée",
+    "failed": "Échec de l'amélioration par l'IA"
+  },
+  "experience": {
+    "position": "Poste",
+    "company": "Entreprise",
+    "start": "Début",
+    "end": "Fin",
+    "location": "Localisation",
+    "highlights": "Points forts",
+    "addBullet": "Ajouter une puce",
+    "addExperience": "Ajouter une expérience",
+    "newRole": "Nouveau poste"
+  },
+  "education": {
+    "degree": "Diplôme",
+    "institution": "Établissement",
+    "start": "Début",
+    "end": "Fin",
+    "score": "Note / Moyenne",
+    "addEducation": "Ajouter une formation",
+    "newDegree": "Nouveau diplôme"
+  },
+  "skills": {
+    "categoryPlaceholder": "Catégorie (ex. : Langues)",
+    "tagPlaceholder": "Ajoutez une compétence et appuyez sur Entrée",
+    "addCategory": "Ajouter une catégorie de compétences"
+  },
+  "projects": {
+    "name": "Nom",
+    "description": "Description",
+    "highlights": "Points forts",
+    "addBullet": "Ajouter une puce",
+    "addProject": "Ajouter un projet",
+    "newProject": "Nouveau projet"
+  },
+  "lists": {
+    "emptyError": "Saisissez d'abord du contenu",
+    "enhanced": "Amélioré",
+    "failed": "Échec de l'amélioration par l'IA"
+  },
+  "certifications": {
+    "name": "Nom",
+    "issuer": "Organisme émetteur",
+    "date": "Date",
+    "add": "Ajouter une certification",
+    "newLabel": "Certification"
+  },
+  "publications": {
+    "title": "Titre",
+    "publisher": "Éditeur",
+    "date": "Date",
+    "add": "Ajouter une publication",
+    "newLabel": "Publication"
+  },
+  "languages": {
+    "namePlaceholder": "Anglais",
+    "proficiencyPlaceholder": "Courant",
+    "add": "Ajouter une langue"
+  },
+  "volunteer": {
+    "role": "Rôle",
+    "organization": "Organisation",
+    "start": "Début",
+    "end": "Fin",
+    "add": "Ajouter un rôle bénévole",
+    "newLabel": "Rôle"
+  },
+  "design": {
+    "title": "Design",
+    "reset": "Réinitialiser",
+    "accentColour": "Couleur d'accentuation",
+    "useColour": "Utiliser la couleur {colour}",
+    "fontFamily": "Police",
+    "fontSize": "Taille de police",
+    "lineHeight": "Interligne",
+    "uppercaseHeadings": "Titres en majuscules",
+    "sectionRules": "Filets de section"
+  },
+  "export": {
+    "title": "Exporter le CV",
+    "description": "Choisissez un format. PDF et Word sont compatibles ATS.",
+    "cancel": "Annuler",
+    "export": "Exporter",
+    "exporting": "Exportation…",
+    "pdf": {
+      "label": "PDF",
+      "description": "Qualité d'impression, texte sélectionnable. Compatible ATS."
+    },
+    "docx": {
+      "label": "Word (.docx)",
+      "description": "Entièrement modifiable dans Microsoft Word ou Google Docs."
+    },
+    "png": {
+      "label": "Image PNG",
+      "description": "Image haute résolution pour le partage ou les portfolios."
+    },
+    "latex": {
+      "label": "Source LaTeX",
+      "description": "À compiler avec pdflatex pour un contrôle typographique."
+    },
+    "toasts": {
+      "pdf": "Export PDF lancé — choisissez « Save as PDF » dans la boîte de dialogue d'impression.",
+      "docx": "Document Word téléchargé",
+      "png": "PNG téléchargé",
+      "latex": "Source LaTeX téléchargée",
+      "failed": "Échec de l'exportation"
+    }
+  },
+  "templates": {
+    "all": "Tous",
+    "categories": {
+      "ats": "ATS",
+      "modern": "Moderne",
+      "executive": "Exécutif",
+      "minimal": "Minimal",
+      "creative": "Créatif"
+    },
+    "applied": "Modèle appliqué",
+    "items": {
+      "ats-classic": {
+        "name": "Classic ATS",
+        "description": "Une colonne, texte brut, compatible ATS."
+      },
+      "ats-clean": {
+        "name": "Clean ATS",
+        "description": "Une colonne moderne avec des espaces généreux."
+      },
+      "modern-pro": {
+        "name": "Modern Professional",
+        "description": "Mise en page à deux colonnes avec une barre latérale colorée."
+      },
+      "executive": {
+        "name": "Executive",
+        "description": "Mise en page condensée, typographie forte, idéale pour les postes de direction."
+      },
+      "creative": {
+        "name": "Creative",
+        "description": "Palette de couleurs audacieuse, ordre des sections personnalisé, deux colonnes."
+      },
+      "minimal": {
+        "name": "Minimal",
+        "description": "Ultra épuré, sans filets, espaces maximaux."
+      },
+      "technical": {
+        "name": "Technical",
+        "description": "Mise en page mettant les compétences en avant, idéale pour les ingénieurs logiciels."
+      },
+      "academic": {
+        "name": "Academic",
+        "description": "Axée sur les publications, adaptée aux chercheurs."
+      },
+      "sidebar-elegant": {
+        "name": "Sidebar Elegant",
+        "description": "Deux colonnes avec une barre latérale colorée et un espacement généreux."
+      },
+      "banner-modern": {
+        "name": "Banner Modern",
+        "description": "Bannière d'accentuation pleine largeur en haut de la page."
+      },
+      "compact": {
+        "name": "Compact",
+        "description": "Espacement serré, davantage de contenu sur une seule page."
+      },
+      "classic-ats": {
+        "name": "Classic ATS",
+        "description": "Une colonne compatible ATS avec un en-tête audacieux."
+      }
+    }
+  },
+  "preview": {
+    "livePreview": "Aperçu en direct",
+    "zoomIn": "Zoom avant",
+    "zoomOut": "Zoom arrière",
+    "resetZoom": "Réinitialiser le zoom",
+    "defaultTemplate": "Classic ATS"
+  },
+  "landing": {
+    "badge": "Éditeur de CV en direct avec une vraie IA",
+    "title": "Le CV qui passe le filtre",
+    "subtitle": "Rédigez, réécrivez et exportez un CV qui passe à la fois l'œil du recruteur et l'analyseur ATS — avec un aperçu en direct et une IA qui aide vraiment.",
+    "ctaPrimary": "Commencer — c’est gratuit",
+    "ctaSecondary": "Se connecter",
+    "features": {
+      "title": "Tout ce qu’il vous faut, dans un seul éditeur",
+      "subtitle": "Plus de copier-coller entre les outils, plus de deviner ce que veut l’analyseur.",
+      "liveTitle": "Aperçu en direct",
+      "liveDescription": "Chaque frappe redessine la page exactement comme elle sera exportée. Passez d’un modèle à l’autre et regardez la mise en page se recomposer.",
+      "aiTitle": "Une IA qui écrit comme vous",
+      "aiDescription": "Affinez votre résumé, transformez des missions en résultats mesurables et gonflez les puces trop maigres — sans remplissage générique.",
+      "atsTitle": "Un score ATS exploitable",
+      "atsDescription": "Voyez exactement quels mots-clés, quelles dates et quelles sections l’analyseur attend, et quoi corriger en premier.",
+      "exportTitle": "Exportez partout",
+      "exportDescription": "PDF pour les candidatures, Word pour l’édition, PNG pour votre portfolio, et LaTeX quand vous voulez maîtriser la typographie.",
+      "privacyTitle": "Vos données restent les vôtres",
+      "privacyDescription": "Chaque CV est lié à votre compte, servi en TLS, et jamais partagé avec un tiers."
+    },
+    "templatesTitle": "Douze modèles, du plus sûr pour l’ATS au plus expressif",
+    "templatesSubtitle": "Tous reposent sur le même modèle de contenu : changer de modèle ne fait jamais perdre un mot.",
+    "howTitle": "Trois étapes, sans deviner",
+    "step1Title": "Créez votre compte",
+    "step1Description": "Un e-mail et un mot de passe. Vos CV sont privés dès la première frappe.",
+    "step2Title": "Remplissez l’éditeur",
+    "step2Description": "Des champs par section accompagnés d’indices, pour ne jamais avoir à vous souvenir de ce qu’attend un ATS.",
+    "step3Title": "Notez, affinez, exportez",
+    "step3Description": "Lancez le contrôle ATS, appliquez les suggestions, puis exportez un fichier prêt à envoyer.",
+    "finalCta": "Créez votre premier CV",
+    "footerTagline": "ResumeForge AI — créez, améliorez et exportez un CV qui sera lu."
+  }
+}

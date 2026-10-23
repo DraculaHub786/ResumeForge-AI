@@ -1,0 +1,57 @@
+{
+  "name": "resume-builder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Live AI-powered resume builder & editor - monorepo",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "build:all": "turbo run build --filter=!@resume-builder/docs",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:ui": "turbo run test:ui",
+    "build:e2e": "node e2e/scripts/build-web.mjs",
+    "test:e2e": "node e2e/scripts/build-web.mjs && playwright test --config e2e/playwright.config.ts",
+    "test:e2e:report": "playwright show-report e2e/.artifacts/playwright-report",
+    "check:versions": "node scripts/check-versions.mjs",
+    "check:i18n": "node scripts/check-i18n.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "verify": "pnpm check:versions && pnpm check:i18n && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "db:generate": "turbo run db:generate --filter=@resume-builder/server",
+    "db:push": "turbo run db:push --filter=@resume-builder/server",
+    "db:migrate": "turbo run db:migrate --filter=@resume-builder/server",
+    "db:studio": "turbo run db:studio --filter=@resume-builder/server",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md,yml,yaml}\"",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "changeset": "changeset",
+    "version": "changeset version && pnpm install",
+    "release": "changeset publish",
+    "docker:build": "docker compose -f docker/docker-compose.yml build",
+    "docker:up": "docker compose -f docker/docker-compose.yml up --build",
+    "docker:down": "docker compose -f docker/docker-compose.yml down"
+  },
+  "pnpm": {
+    "overrides": {
+      "zod-to-json-schema": "3.24.6"
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@changesets/cli": "^2.27.7",
+    "@playwright/test": "^1.64.1",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^10.0.1",
+    "prettier": "^3.3.3",
+    "turbo": "^2.1.3",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.6.0"
+}

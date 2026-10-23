@@ -1,0 +1,63 @@
+# syntax=docker/dockerfile:1
+#
+# Production image for the ResumeForge API server.
+#
+# The server is an Express app that runs from `apps/server/dist`. Because the
+# repository is a pnpm workspace, the runtime dependencies are materialised
+# with `pnpm deploy`, which produces a self-contained directory containing
+# only the production dependency tree.
+
+# ---------------------------------------------------------------------------
+# Base
+# ---------------------------------------------------------------------------
+FROM node:22-alpine AS base
+RUN corepack enable && corepack prepare pnpm@9.6.0 --activate
+WORKDIR /app
+
+# ---------------------------------------------------------------------------
+# Dependencies
+#
+# Only the manifests are copied here so this layer is cached until a
+# dependency actually changes.
+# ---------------------------------------------------------------------------
+FROM base AS deps
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY apps/server/package.json apps/server/package.json
+COPY packages/types/package.json packages/types/package.json
+COPY packages/ai/package.json packages/ai/package.json
+COPY packages/pdf/package.json packages/pdf/package.json
+COPY packages/ui/package.json packages/ui/package.json
+RUN pnpm install --frozen-lockfile
+
+# ---------------------------------------------------------------------------
+# Build
+# ---------------------------------------------------------------------------
+FROM deps AS build
+COPY . .
+# `...` selects the package and everything it depends on, so the shared
+# packages are compiled before the server.
+RUN pnpm turbo run build --filter=@resume-builder/server...
+# `pnpm deploy` copies the package plus a production-only dependency tree.
+RUN pnpm deploy --filter=@resume-builder/server --prod /deploy
+
+# ---------------------------------------------------------------------------
+# Runtime
+# ---------------------------------------------------------------------------
+FROM base AS runtime
+
+ENV NODE_ENV=production
+ENV PORT=5000
+
+COPY --from=build /deploy /app
+
+# The SQLite database lives on a volume so it survives a container restart.
+RUN mkdir -p /data && chown -R node:node /data /app
+VOLUME ["/data"]
+
+USER node
+EXPOSE 5000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||5000)+'/api/v1/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+CMD ["node", "dist/index.js"]

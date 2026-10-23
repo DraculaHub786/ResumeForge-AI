@@ -1,0 +1,377 @@
+{
+  "common": {
+    "appName": "ResumeForge AI",
+    "loading": "Wird geladen…",
+    "retry": "Erneut versuchen",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "language": "Sprache",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen"
+  },
+  "auth": {
+    "register": {
+      "title": "Erstellen Sie Ihr Konto",
+      "subtitle": "Starten Sie mit einem Lebenslauf, der die Bewerbungs-Bots übersteht.",
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Ada Lovelace",
+      "email": "E-Mail",
+      "emailPlaceholder": "you@example.com",
+      "password": "Passwort",
+      "passwordPlaceholder": "Mindestens 8 Zeichen",
+      "submit": "Konto erstellen",
+      "submitting": "Konto wird erstellt…",
+      "hasAccount": "Sie haben bereits ein Konto?",
+      "signInLink": "Anmelden",
+      "success": "Konto erstellt",
+      "error": "Ihr Konto konnte nicht erstellt werden"
+    },
+    "login": {
+      "title": "Willkommen zurück",
+      "subtitle": "Melden Sie sich an, um weiter an Ihrem Lebenslauf zu arbeiten.",
+      "email": "E-Mail",
+      "emailPlaceholder": "you@example.com",
+      "password": "Passwort",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Anmelden",
+      "submitting": "Anmeldung läuft…",
+      "noAccount": "Noch kein Konto?",
+      "createOne": "Jetzt erstellen",
+      "success": "Angemeldet",
+      "error": "Die Anmeldung ist fehlgeschlagen"
+    },
+    "errors": {
+      "name": "Bitte geben Sie Ihren Namen an",
+      "email": "Geben Sie eine gültige E-Mail-Adresse ein",
+      "password": "Das Passwort muss mindestens 8 Zeichen lang sein",
+      "invalid": "Ungültige Eingabe"
+    }
+  },
+  "dashboard": {
+    "title": "Meine Lebensläufe",
+    "subtitle": "Erstellen, verbessern und exportieren Sie Ihren Lebenslauf mit KI-Unterstützung.",
+    "newResume": "Neuer Lebenslauf",
+    "emptyTitle": "Noch keine Lebensläufe",
+    "emptyDescription": "Legen Sie los und erstellen Sie Ihren ersten Lebenslauf.",
+    "emptyCta": "Ersten Lebenslauf erstellen",
+    "loading": "Ihre Lebensläufe werden geladen…",
+    "errorTitle": "Meine Lebensläufe",
+    "errorDescription": "Ihre Lebensläufe konnten nicht geladen werden.",
+    "updated": "Aktualisiert",
+    "edit": "Bearbeiten",
+    "export": "Exportieren",
+    "delete": "Löschen",
+    "deleteAria": "{title} löschen",
+    "createSuccess": "Lebenslauf erstellt!",
+    "createError": "Der Lebenslauf konnte nicht erstellt werden",
+    "deleteSuccess": "Lebenslauf gelöscht"
+  },
+  "builder": {
+    "loading": "Lebenslauf wird geladen…",
+    "signInRequired": "Anmeldung erforderlich",
+    "signInToOpen": "Melden Sie sich an, um diesen Lebenslauf zu öffnen.",
+    "backToDashboard": "Zurück zum Dashboard",
+    "goToDashboard": "Zum Dashboard",
+    "resumeNotFound": "Lebenslauf nicht gefunden",
+    "resumeNotFoundDescription": "Der gesuchte Lebenslauf existiert nicht oder Sie haben keinen Zugriff darauf.",
+    "resumeTitle": "Titel des Lebenslaufs",
+    "saving": "Wird gespeichert…",
+    "allChangesSaved": "Alle Änderungen gespeichert",
+    "autosaveFailed": "Automatisches Speichern fehlgeschlagen – Ihre Änderungen wurden lokal gespeichert.",
+    "togglePreview": "Vorschau ein-/ausblenden",
+    "export": "Exportieren",
+    "tabContent": "Inhalt",
+    "tabTemplates": "Vorlagen",
+    "tabDesign": "Design",
+    "chooseTemplate": "Vorlage auswählen",
+    "templateApplied": "Vorlage angewendet"
+  },
+  "sections": {
+    "profile": {
+      "title": "Persönliche Daten",
+      "hint": "Ihr Name, Ihre Überschrift und Ihre Kontaktdaten. Dieser Abschnitt wird immer zuerst dargestellt."
+    },
+    "summary": {
+      "title": "Berufliche Zusammenfassung",
+      "hint": "2 bis 4 Sätze zu Ihrer Rolle, Ihrer Erfahrung und Ihren stärksten Fähigkeiten."
+    },
+    "experience": {
+      "title": "Berufserfahrung",
+      "hint": "Positionen, Unternehmen, Zeiträume und Erfolge."
+    },
+    "education": {
+      "title": "Ausbildung",
+      "hint": "Abschlüsse, Bildungseinrichtungen, Noten und Lehrveranstaltungen."
+    },
+    "skills": {
+      "title": "Fähigkeiten",
+      "hint": "Fassen Sie verwandte Fähigkeiten in Kategorien zusammen."
+    },
+    "projects": {
+      "title": "Projekte",
+      "hint": "Persönliche oder berufliche Arbeiten, die hervorzuheben sind."
+    },
+    "achievements": {
+      "title": "Erfolge",
+      "hint": "Auszeichnungen, Ehrungen und bemerkenswerte Leistungen."
+    },
+    "certifications": {
+      "title": "Zertifikate",
+      "hint": "Nachweise mit Aussteller und Datum."
+    },
+    "publications": {
+      "title": "Publikationen",
+      "hint": "Fachartikel, Beiträge und Konferenzvorträge."
+    },
+    "languages": {
+      "title": "Sprachen",
+      "hint": "Gesprochene und geschriebene Sprachen mit Kenntnisstand."
+    },
+    "volunteer": {
+      "title": "Ehrenamt",
+      "hint": "Engagement in der Community und ehrenamtliche Beiträge."
+    },
+    "interests": {
+      "title": "Interessen",
+      "hint": "Hobbys und Interessen, die zur Stelle passen."
+    }
+  },
+  "editor": {
+    "title": "Inhalts-Editor",
+    "addLink": "Link hinzufügen",
+    "removeTag": "{tag} entfernen",
+    "achievementPlaceholder": "Beschreiben Sie einen Erfolg mit einer Kennzahl…",
+    "addAchievement": "Erfolg hinzufügen",
+    "interestPlaceholder": "Ein zur Stelle passendes Interesse…",
+    "addInterest": "Interesse hinzufügen"
+  },
+  "profile": {
+    "fullName": "Vollständiger Name",
+    "headline": "Überschrift",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "location": "Ort",
+    "about": "Über mich",
+    "aboutPlaceholder": "Eine kurze Zeile, die in zweispaltigen Vorlagen angezeigt wird.",
+    "links": "Links",
+    "linkLabelPlaceholder": "GitHub",
+    "linkUrlPlaceholder": "https://github.com/you"
+  },
+  "summary": {
+    "label": "Berufliche Zusammenfassung",
+    "placeholder": "2 bis 4 Sätze zu Ihrer Rolle, Ihrer Erfahrung und Ihren stärksten Fähigkeiten…",
+    "enhance": "Mit KI verbessern",
+    "enhancing": "Wird verbessert…",
+    "emptyError": "Fügen Sie zuerst einen Zusammenfassungstext hinzu",
+    "enhanced": "Zusammenfassung verbessert",
+    "noResult": "Es wurde keine Verbesserung zurückgegeben",
+    "failed": "Die KI-Verbesserung ist fehlgeschlagen"
+  },
+  "experience": {
+    "position": "Position",
+    "company": "Unternehmen",
+    "start": "Beginn",
+    "end": "Ende",
+    "location": "Ort",
+    "highlights": "Erfolge",
+    "addBullet": "Stichpunkt hinzufügen",
+    "addExperience": "Berufserfahrung hinzufügen",
+    "newRole": "Neue Position"
+  },
+  "education": {
+    "degree": "Abschluss",
+    "institution": "Bildungseinrichtung",
+    "start": "Beginn",
+    "end": "Ende",
+    "score": "Note / GPA",
+    "addEducation": "Ausbildung hinzufügen",
+    "newDegree": "Neuer Abschluss"
+  },
+  "skills": {
+    "categoryPlaceholder": "Kategorie (z. B. Sprachen)",
+    "tagPlaceholder": "Fähigkeit hinzufügen und Enter drücken",
+    "addCategory": "Fähigkeitskategorie hinzufügen"
+  },
+  "projects": {
+    "name": "Name",
+    "description": "Beschreibung",
+    "highlights": "Erfolge",
+    "addBullet": "Stichpunkt hinzufügen",
+    "addProject": "Projekt hinzufügen",
+    "newProject": "Neues Projekt"
+  },
+  "lists": {
+    "emptyError": "Fügen Sie zuerst Inhalt hinzu",
+    "enhanced": "Verbessert",
+    "failed": "Die KI-Verbesserung ist fehlgeschlagen"
+  },
+  "certifications": {
+    "name": "Name",
+    "issuer": "Aussteller",
+    "date": "Datum",
+    "add": "Zertifikat hinzufügen",
+    "newLabel": "Zertifikat"
+  },
+  "publications": {
+    "title": "Titel",
+    "publisher": "Herausgeber",
+    "date": "Datum",
+    "add": "Publikation hinzufügen",
+    "newLabel": "Publikation"
+  },
+  "languages": {
+    "namePlaceholder": "Englisch",
+    "proficiencyPlaceholder": "Fließend",
+    "add": "Sprache hinzufügen"
+  },
+  "volunteer": {
+    "role": "Rolle",
+    "organization": "Organisation",
+    "start": "Beginn",
+    "end": "Ende",
+    "add": "Ehrenamtliche Rolle hinzufügen",
+    "newLabel": "Rolle"
+  },
+  "design": {
+    "title": "Design",
+    "reset": "Zurücksetzen",
+    "accentColour": "Akzentfarbe",
+    "useColour": "Farbe {colour} verwenden",
+    "fontFamily": "Schriftart",
+    "fontSize": "Schriftgröße",
+    "lineHeight": "Zeilenhöhe",
+    "uppercaseHeadings": "Überschriften in Großbuchstaben",
+    "sectionRules": "Trennlinien"
+  },
+  "export": {
+    "title": "Lebenslauf exportieren",
+    "description": "Wählen Sie ein Format. PDF und Word sind ATS-kompatibel.",
+    "cancel": "Abbrechen",
+    "export": "Exportieren",
+    "exporting": "Wird exportiert…",
+    "pdf": {
+      "label": "PDF",
+      "description": "Druckqualität mit auswählbarem Text. ATS-sicher."
+    },
+    "docx": {
+      "label": "Word (.docx)",
+      "description": "Vollständig in Microsoft Word oder Google Docs bearbeitbar."
+    },
+    "png": {
+      "label": "PNG-Bild",
+      "description": "Hochauflösendes Bild zum Teilen oder für Portfolios."
+    },
+    "latex": {
+      "label": "LaTeX-Quelle",
+      "description": "Mit pdflatex kompilieren, für volle typografische Kontrolle."
+    },
+    "toasts": {
+      "pdf": "PDF-Export gestartet – wählen Sie \"Save as PDF\" im Druckdialog.",
+      "docx": "Word-Dokument heruntergeladen",
+      "png": "PNG heruntergeladen",
+      "latex": "LaTeX-Quelle heruntergeladen",
+      "failed": "Der Export ist fehlgeschlagen"
+    }
+  },
+  "templates": {
+    "all": "Alle",
+    "categories": {
+      "ats": "ATS",
+      "modern": "Modern",
+      "executive": "Executive",
+      "minimal": "Minimal",
+      "creative": "Kreativ"
+    },
+    "applied": "Vorlage angewendet",
+    "items": {
+      "ats-classic": {
+        "name": "Classic ATS",
+        "description": "Einspaltig, reiner Text, ATS-freundlich."
+      },
+      "ats-clean": {
+        "name": "Clean ATS",
+        "description": "Modern, einspaltig mit großzügigem Weißraum."
+      },
+      "modern-pro": {
+        "name": "Modern Professional",
+        "description": "Zweispaltiges Layout mit farbig akzentuiertem Seitenbereich."
+      },
+      "executive": {
+        "name": "Executive",
+        "description": "Kompaktes Layout, klare Typografie, ideal für Führungsrollen."
+      },
+      "creative": {
+        "name": "Creative",
+        "description": "Kräftige Farbpalette, eigene Reihenfolge der Abschnitte, zweispaltig."
+      },
+      "minimal": {
+        "name": "Minimal",
+        "description": "Äußerst reduziert, ohne Linien, maximaler Weißraum."
+      },
+      "technical": {
+        "name": "Technical",
+        "description": "Fähigkeiten zuerst, ideal für Softwareentwickler."
+      },
+      "academic": {
+        "name": "Academic",
+        "description": "Auf Publikationen ausgerichtet, geeignet für Forschende."
+      },
+      "sidebar-elegant": {
+        "name": "Sidebar Elegant",
+        "description": "Zweispaltig mit farbig akzentuiertem Seitenbereich und großzügigen Abständen."
+      },
+      "banner-modern": {
+        "name": "Banner Modern",
+        "description": "Breites Akzentbanner am oberen Seitenrand."
+      },
+      "compact": {
+        "name": "Compact",
+        "description": "Enge Abstände, passt mehr Inhalt auf eine Seite."
+      },
+      "classic-ats": {
+        "name": "Classic ATS",
+        "description": "ATS-freundliche einspaltige Darstellung mit kräftiger Kopfzeile."
+      }
+    }
+  },
+  "preview": {
+    "livePreview": "Live-Vorschau",
+    "zoomIn": "Vergrößern",
+    "zoomOut": "Verkleinern",
+    "resetZoom": "Zoom zurücksetzen",
+    "defaultTemplate": "Classic ATS"
+  },
+  "landing": {
+    "badge": "Lebenslauf-Editor in Echtzeit mit echter KI",
+    "title": "Der Lebenslauf, der den Filter besteht",
+    "subtitle": "Schreiben, überarbeiten und exportieren Sie einen Lebenslauf, der sowohl das Auge der Personalabteilung als auch den ATS-Parser übersteht — mit Live-Vorschau und einer KI, die wirklich hilft.",
+    "ctaPrimary": "Jetzt loslegen — kostenlos",
+    "ctaSecondary": "Anmelden",
+    "features": {
+      "title": "Alles, was Sie brauchen, in einem Editor",
+      "subtitle": "Kein Kopieren und Klicken zwischen Werkzeugen, kein Rätseln, was der Parser möchte.",
+      "liveTitle": "Live-Vorschau",
+      "liveDescription": "Jeder Tastendruck zeichnet die Seite genau so neu, wie sie exportiert wird. Wechseln Sie zwischen zwölf Vorlagen und sehen Sie, wie sich das Layout neu ordnet.",
+      "aiTitle": "KI, die wie Sie schreibt",
+      "aiDescription": "Schärfen Sie Ihre Zusammenfassung, machen Sie aus Aufgaben messbare Erfolge und verdichten Sie dünne Stichpunkte — ohne generische Füllsätze.",
+      "atsTitle": "Ein ATS-Score, mit dem Sie arbeiten können",
+      "atsDescription": "Sehen Sie genau, welche Keywords, welche Daten und welche Abschnitte der Parser erwartet — und was Sie zuerst korrigieren sollten.",
+      "exportTitle": "Überall exportieren",
+      "exportDescription": "PDF für Bewerbungen, Word zum Bearbeiten, PNG für Ihr Portfolio und LaTeX, wenn Sie die Typografie selbst bestimmen wollen.",
+      "privacyTitle": "Ihre Daten bleiben Ihre",
+      "privacyDescription": "Jeder Lebenslauf ist an Ihr Konto gebunden, wird über TLS ausgeliefert und niemals an Dritte weitergegeben."
+    },
+    "templatesTitle": "Zwölf Vorlagen, von ATS-sicher bis ausdrucksstark",
+    "templatesSubtitle": "Alle beruhen auf demselben Inhaltsmodell — beim Wechsel geht kein Wort verloren.",
+    "howTitle": "Drei Schritte, ohne Rätseln",
+    "step1Title": "Konto erstellen",
+    "step1Description": "Eine E-Mail-Adresse und ein Passwort. Ihre Lebensläufe sind vom ersten Tastendruck an privat.",
+    "step2Title": "Editor ausfüllen",
+    "step2Description": "Abschnitt für Abschnitt, jeweils mit Hinweisen — so müssen Sie sich nie merken, was ein ATS sehen möchte.",
+    "step3Title": "Bewerten, verfeinern, exportieren",
+    "step3Description": "Führen Sie die ATS-Prüfung aus, übernehmen Sie die Vorschläge und exportieren Sie eine Datei, die sofort versendet werden kann.",
+    "finalCta": "Ersten Lebenslauf erstellen",
+    "footerTagline": "ResumeForge AI — Lebenslauf erstellen, verbessern und exportieren, der gelesen wird."
+  }
+}

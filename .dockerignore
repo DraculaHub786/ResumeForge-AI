@@ -1,0 +1,54 @@
+# Build context excludes — keeps the image small and the cache stable.
+
+# Dependencies (re-installed inside the image)
+node_modules
+**/node_modules
+.pnpm-store
+
+# Build outputs (re-built inside the image)
+dist
+**/dist
+.next
+**/.next
+out
+build
+**/build
+.turbo
+**/.turbo
+*.tsbuildinfo
+
+# Test + report artefacts
+coverage
+**/coverage
+e2e/.artifacts
+playwright-report
+test-results
+**/test-results
+
+# Local data
+*.db
+*.sqlite
+*.sqlite3
+uploads
+temp
+exports
+apps/server/exports
+
+# Environment — never bake secrets into an image
+.env
+.env.*
+!.env.example
+
+# Version control and CI
+.git
+.gitignore
+.github
+.vscode
+.claude
+
+# Docs and tooling
+*.md
+!Todo.md
+.eslintrc*
+eslint.config.*
+.prettierrc*

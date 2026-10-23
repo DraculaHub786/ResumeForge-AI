@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@resume-builder/types/*": ["packages/types/src/*"],
+      "@resume-builder/ui/*": ["packages/ui/src/*"],
+      "@resume-builder/ai/*": ["packages/ai/src/*"],
+      "@resume-builder/pdf/*": ["packages/pdf/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".turbo", ".next", "build"]
+}

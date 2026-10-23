@@ -1,0 +1,377 @@
+{
+  "common": {
+    "appName": "ResumeForge AI",
+    "loading": "Cargando…",
+    "retry": "Reintentar",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "language": "Idioma",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  },
+  "auth": {
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Empieza a crear un currículum que supere los filtros de selección automática.",
+      "name": "Nombre completo",
+      "namePlaceholder": "Ada Lovelace",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "you@example.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Mínimo 8 caracteres",
+      "submit": "Crear cuenta",
+      "submitting": "Creando cuenta…",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signInLink": "Iniciar sesión",
+      "success": "Cuenta creada",
+      "error": "No se pudo crear tu cuenta"
+    },
+    "login": {
+      "title": "Hola de nuevo",
+      "subtitle": "Inicia sesión para seguir elaborando tu currículum.",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "you@example.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Iniciar sesión",
+      "submitting": "Iniciando sesión…",
+      "noAccount": "¿Todavía no tienes cuenta?",
+      "createOne": "Crea una",
+      "success": "Sesión iniciada",
+      "error": "No se pudo iniciar la sesión"
+    },
+    "errors": {
+      "name": "Dinos tu nombre",
+      "email": "Introduce un correo electrónico válido",
+      "password": "La contraseña debe tener al menos 8 caracteres",
+      "invalid": "Datos no válidos"
+    }
+  },
+  "dashboard": {
+    "title": "Mis currículums",
+    "subtitle": "Crea, mejora y exporta tu currículum con la ayuda de la IA.",
+    "newResume": "Nuevo currículum",
+    "emptyTitle": "Todavía no tienes currículums",
+    "emptyDescription": "Empieza creando un nuevo currículum.",
+    "emptyCta": "Crea tu primer currículum",
+    "loading": "Cargando tus currículums…",
+    "errorTitle": "Mis currículums",
+    "errorDescription": "No se pudieron cargar tus currículums.",
+    "updated": "Actualizado",
+    "edit": "Editar",
+    "export": "Exportar",
+    "delete": "Eliminar",
+    "deleteAria": "Eliminar {title}",
+    "createSuccess": "¡Currículum creado!",
+    "createError": "No se pudo crear el currículum",
+    "deleteSuccess": "Currículum eliminado"
+  },
+  "builder": {
+    "loading": "Cargando currículum…",
+    "signInRequired": "Necesitas iniciar sesión",
+    "signInToOpen": "Inicia sesión para abrir este currículum.",
+    "backToDashboard": "Volver al panel",
+    "goToDashboard": "Ir al panel",
+    "resumeNotFound": "Currículum no encontrado",
+    "resumeNotFoundDescription": "El currículum que buscas no existe o no tienes acceso a él.",
+    "resumeTitle": "Título del currículum",
+    "saving": "Guardando…",
+    "allChangesSaved": "Todos los cambios guardados",
+    "autosaveFailed": "No se pudo guardar automáticamente: tus cambios se guardaron localmente.",
+    "togglePreview": "Mostrar u ocultar la vista previa",
+    "export": "Exportar",
+    "tabContent": "Contenido",
+    "tabTemplates": "Plantillas",
+    "tabDesign": "Diseño",
+    "chooseTemplate": "Elige una plantilla",
+    "templateApplied": "Plantilla aplicada"
+  },
+  "sections": {
+    "profile": {
+      "title": "Información personal",
+      "hint": "Tu nombre, tu título y tus datos de contacto. Esta sección siempre se muestra primero."
+    },
+    "summary": {
+      "title": "Resumen profesional",
+      "hint": "De 2 a 4 frases sobre tu puesto, tu experiencia y tus fortalezas."
+    },
+    "experience": {
+      "title": "Experiencia laboral",
+      "hint": "Puestos, empresas, fechas y resultados destacados."
+    },
+    "education": {
+      "title": "Formación",
+      "hint": "Títulos, instituciones, notas y asignaturas."
+    },
+    "skills": {
+      "title": "Habilidades",
+      "hint": "Agrupa las habilidades relacionadas en categorías."
+    },
+    "projects": {
+      "title": "Proyectos",
+      "hint": "Trabajo personal o profesional que merece destacar."
+    },
+    "achievements": {
+      "title": "Logros",
+      "hint": "Premios, distinciones y logros destacados."
+    },
+    "certifications": {
+      "title": "Certificaciones",
+      "hint": "Credenciales con entidad emisora y fecha."
+    },
+    "publications": {
+      "title": "Publicaciones",
+      "hint": "Artículos, ensayos y presentaciones en conferencias."
+    },
+    "languages": {
+      "title": "Idiomas",
+      "hint": "Idiomas hablados y escritos con su nivel."
+    },
+    "volunteer": {
+      "title": "Trabajo voluntario",
+      "hint": "Aportaciones a la comunidad y trabajo voluntario."
+    },
+    "interests": {
+      "title": "Intereses",
+      "hint": "Aficiones e intereses relevantes para el puesto."
+    }
+  },
+  "editor": {
+    "title": "Editor de contenido",
+    "addLink": "Añadir enlace",
+    "removeTag": "Quitar {tag}",
+    "achievementPlaceholder": "Describe un logro con una métrica…",
+    "addAchievement": "Añadir logro",
+    "interestPlaceholder": "Un interés relevante para el puesto…",
+    "addInterest": "Añadir interés"
+  },
+  "profile": {
+    "fullName": "Nombre completo",
+    "headline": "Titular",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "location": "Ubicación",
+    "about": "Sobre mí",
+    "aboutPlaceholder": "Una línea breve que se muestra en las plantillas de dos columnas.",
+    "links": "Enlaces",
+    "linkLabelPlaceholder": "GitHub",
+    "linkUrlPlaceholder": "https://github.com/you"
+  },
+  "summary": {
+    "label": "Resumen profesional",
+    "placeholder": "De 2 a 4 frases sobre tu puesto, tu experiencia y tus fortalezas…",
+    "enhance": "Mejorar con IA",
+    "enhancing": "Mejorando…",
+    "emptyError": "Primero añade el texto del resumen",
+    "enhanced": "Resumen mejorado",
+    "noResult": "La IA no devolvió ninguna mejora",
+    "failed": "No se pudo mejorar el resumen con IA"
+  },
+  "experience": {
+    "position": "Puesto",
+    "company": "Empresa",
+    "start": "Inicio",
+    "end": "Fin",
+    "location": "Ubicación",
+    "highlights": "Logros destacados",
+    "addBullet": "Añadir viñeta",
+    "addExperience": "Añadir experiencia",
+    "newRole": "Nuevo puesto"
+  },
+  "education": {
+    "degree": "Titulación",
+    "institution": "Institución",
+    "start": "Inicio",
+    "end": "Fin",
+    "score": "Nota / Promedio",
+    "addEducation": "Añadir formación",
+    "newDegree": "Nueva titulación"
+  },
+  "skills": {
+    "categoryPlaceholder": "Categoría (p. ej. Idiomas)",
+    "tagPlaceholder": "Añade una habilidad y pulsa Enter",
+    "addCategory": "Añadir categoría de habilidades"
+  },
+  "projects": {
+    "name": "Nombre",
+    "description": "Descripción",
+    "highlights": "Logros destacados",
+    "addBullet": "Añadir viñeta",
+    "addProject": "Añadir proyecto",
+    "newProject": "Nuevo proyecto"
+  },
+  "lists": {
+    "emptyError": "Primero añade algún contenido",
+    "enhanced": "Mejorado",
+    "failed": "No se pudo mejorar con IA"
+  },
+  "certifications": {
+    "name": "Nombre",
+    "issuer": "Entidad emisora",
+    "date": "Fecha",
+    "add": "Añadir certificación",
+    "newLabel": "Certificación"
+  },
+  "publications": {
+    "title": "Título",
+    "publisher": "Editorial",
+    "date": "Fecha",
+    "add": "Añadir publicación",
+    "newLabel": "Publicación"
+  },
+  "languages": {
+    "namePlaceholder": "Inglés",
+    "proficiencyPlaceholder": "Bilingüe",
+    "add": "Añadir idioma"
+  },
+  "volunteer": {
+    "role": "Puesto",
+    "organization": "Organización",
+    "start": "Inicio",
+    "end": "Fin",
+    "add": "Añadir puesto de voluntario",
+    "newLabel": "Puesto"
+  },
+  "design": {
+    "title": "Diseño",
+    "reset": "Restablecer",
+    "accentColour": "Color de acento",
+    "useColour": "Usar color {colour}",
+    "fontFamily": "Familia tipográfica",
+    "fontSize": "Tamaño de fuente",
+    "lineHeight": "Interlineado",
+    "uppercaseHeadings": "Encabezados en mayúsculas",
+    "sectionRules": "Separadores de sección"
+  },
+  "export": {
+    "title": "Exportar currículum",
+    "description": "Elige un formato. El PDF y el Word son compatibles con los sistemas ATS.",
+    "cancel": "Cancelar",
+    "export": "Exportar",
+    "exporting": "Exportando…",
+    "pdf": {
+      "label": "PDF",
+      "description": "Texto seleccionable con calidad de impresión. Seguro para ATS."
+    },
+    "docx": {
+      "label": "Word (.docx)",
+      "description": "Totalmente editable en Microsoft Word o Google Docs."
+    },
+    "png": {
+      "label": "Imagen PNG",
+      "description": "Imagen de alta resolución para compartir o para usar en portafolios."
+    },
+    "latex": {
+      "label": "Fuente LaTeX",
+      "description": "Compila con pdflatex para tener control tipográfico."
+    },
+    "toasts": {
+      "pdf": "Se ha iniciado la exportación a PDF: elige «Save as PDF» en el diálogo de impresión.",
+      "docx": "Documento de Word descargado",
+      "png": "PNG descargado",
+      "latex": "Fuente LaTeX descargada",
+      "failed": "Error al exportar"
+    }
+  },
+  "templates": {
+    "all": "Todas",
+    "categories": {
+      "ats": "ATS",
+      "modern": "Moderna",
+      "executive": "Ejecutiva",
+      "minimal": "Mínima",
+      "creative": "Creativa"
+    },
+    "applied": "Plantilla aplicada",
+    "items": {
+      "ats-classic": {
+        "name": "Classic ATS",
+        "description": "Una columna, texto sin formato, compatible con ATS."
+      },
+      "ats-clean": {
+        "name": "Clean ATS",
+        "description": "Una columna moderna con mucho espacio en blanco."
+      },
+      "modern-pro": {
+        "name": "Modern Professional",
+        "description": "Diseño de dos columnas con una barra lateral de acento tintada."
+      },
+      "executive": {
+        "name": "Executive",
+        "description": "Diseño condensado, tipografía marcada, ideal para puestos de dirección."
+      },
+      "creative": {
+        "name": "Creative",
+        "description": "Paleta de colores vibrante, orden de secciones personalizable y dos columnas."
+      },
+      "minimal": {
+        "name": "Minimal",
+        "description": "Ultra limpio, sin separadores y con el máximo de espacio en blanco."
+      },
+      "technical": {
+        "name": "Technical",
+        "description": "Diseño con las habilidades primero, ideal para ingenieros de software."
+      },
+      "academic": {
+        "name": "Academic",
+        "description": "Enfocado en publicaciones, adecuado para investigadores."
+      },
+      "sidebar-elegant": {
+        "name": "Sidebar Elegant",
+        "description": "Dos columnas con una barra lateral tintada y un espaciado generoso."
+      },
+      "banner-modern": {
+        "name": "Banner Modern",
+        "description": "Banner de acento a todo el ancho en la parte superior de la página."
+      },
+      "compact": {
+        "name": "Compact",
+        "description": "Espaciado compacto: cabe más contenido en una sola página."
+      },
+      "classic-ats": {
+        "name": "Classic ATS",
+        "description": "Una columna compatible con ATS con un encabezado destacado."
+      }
+    }
+  },
+  "preview": {
+    "livePreview": "Vista previa en vivo",
+    "zoomIn": "Ampliar",
+    "zoomOut": "Reducir",
+    "resetZoom": "Restablecer el zoom",
+    "defaultTemplate": "Classic ATS"
+  },
+  "landing": {
+    "badge": "Editor de currículum en vivo con IA real",
+    "title": "El currículum que supera el filtro",
+    "subtitle": "Escribe, reescribe y exporta un currículum que pase tanto por la mirada de quien recluta como por el analizador de ATS, con vista previa en vivo y una IA que te ayuda de verdad.",
+    "ctaPrimary": "Empieza a crear — es gratis",
+    "ctaSecondary": "Iniciar sesión",
+    "features": {
+      "title": "Todo lo que necesitas, en un solo editor",
+      "subtitle": "Sin copiar y pegar entre herramientas ni adivinar qué espera el analizador.",
+      "liveTitle": "Vista previa en vivo",
+      "liveDescription": "Cada pulsación redibuja la página tal y como se exportará. Cambia entre doce plantillas y observa cómo se reacomoda el diseño.",
+      "aiTitle": "IA que escribe como tú",
+      "aiDescription": "Afina tu resumen, convierte funciones en logros medibles y amplía las viñetas más débiles, sin relleno genérico.",
+      "atsTitle": "Puntuación ATS sobre la que puedes actuar",
+      "atsDescription": "Descubre exactamente qué palabras clave, fechas y secciones busca el analizador, y qué corregir primero.",
+      "exportTitle": "Exporta a donde quieras",
+      "exportDescription": "PDF para presentar, Word para editar, PNG para tu portafolio y LaTeX cuando quieras control tipográfico.",
+      "privacyTitle": "Tus datos siguen siendo tuyos",
+      "privacyDescription": "Cada currículum está vinculado a tu cuenta, se sirve por TLS y nunca se comparte con terceros."
+    },
+    "templatesTitle": "Doce plantillas, de compatibles con ATS a expresivas",
+    "templatesSubtitle": "Todas parten del mismo modelo de contenido, así que cambiar nunca te hace perder una palabra.",
+    "howTitle": "Tres pasos, sin adivinar",
+    "step1Title": "Crea tu cuenta",
+    "step1Description": "Un correo y una contraseña. Tus currículums son privados desde la primera pulsación.",
+    "step2Title": "Rellena el editor",
+    "step2Description": "Campos por sección con pistas, para que nunca tengas que recordar qué quiere ver un ATS.",
+    "step3Title": "Puntúa, refina y exporta",
+    "step3Description": "Ejecuta la comprobación de ATS, aplica las sugerencias y exporta un archivo listo para enviar.",
+    "finalCta": "Crea tu primer currículum",
+    "footerTagline": "ResumeForge AI: crea, mejora y exporta un currículum que se lee."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@resume-builder/ai",
+  "version": "0.1.0",
+  "description": "AI integration package: OpenRouter client and resume-specific prompt templates",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./ats": {
+      "types": "./dist/ats.d.ts",
+      "import": "./dist/ats.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^0.0.72",
+    "@resume-builder/types": "workspace:*",
+    "ai": "^3.4.12",
+    "zod": "~3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.0"
+  }
+}

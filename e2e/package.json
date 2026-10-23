@@ -1,0 +1,11 @@
+{
+  "name": "@resume-builder/e2e",
+  "private": true,
+  "type": "module",
+  "description": "Playwright end-to-end suite (auth -> create -> edit -> export)",
+  "scripts": {
+    "test": "playwright test --config playwright.config.ts",
+    "test:headed": "playwright test --config playwright.config.ts --headed",
+    "report": "playwright show-report ./.artifacts/playwright-report"
+  }
+}

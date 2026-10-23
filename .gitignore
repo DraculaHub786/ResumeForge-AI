@@ -1,0 +1,85 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist
+build
+.next
+out
+*.tsbuildinfo
+
+# Turbo
+.turbo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE & AI Tooling
+.idea
+.vscode
+*.swp
+*.swo
+.claude
+.kilo
+.cursor
+.windsurf
+.gemini
+.continue
+.aider*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing & E2E
+coverage
+.nyc_output
+playwright-report
+test-results
+.artifacts
+e2e/.artifacts
+
+# Database
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+prisma/migrations/.migration_lock.toml
+
+# Docker
+.docker
+
+# Python artifacts
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.venv
+venv
+
+# Legacy prototype
+app.py
+templates
+
+# Misc & temporary
+*.pem
+.vercel
+.netlify
+.tmp
+temp
+uploads

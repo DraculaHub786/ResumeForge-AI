@@ -1,0 +1,24 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "linked": [],
+  "access": "restricted",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "privatePackages": {
+    "version": true,
+    "tag": false
+  },
+  "fixed": [
+    [
+      "@resume-builder/types",
+      "@resume-builder/ai",
+      "@resume-builder/pdf",
+      "@resume-builder/ui",
+      "@resume-builder/server",
+      "@resume-builder/web"
+    ]
+  ],
+  "ignore": []
+}
