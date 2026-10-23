@@ -2,11 +2,21 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "build/**"],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "build/**"
+      ],
       "cache": true
     },
     "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
       "cache": false,
       "persistent": true
     },
@@ -19,12 +29,16 @@
       "cache": true
     },
     "typecheck": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "outputs": [],
       "cache": true
     },
     "test": {
-      "outputs": ["coverage/**"],
+      "outputs": [
+        "coverage/**"
+      ],
       "cache": true
     },
     "test:ui": {
@@ -47,6 +61,12 @@
       "cache": false
     }
   },
-  "globalEnv": ["NODE_ENV", "DATABASE_URL", "OPENROUTER_API_KEY"],
-  "globalDependencies": [".env"]
+  "globalEnv": [
+    "NODE_ENV",
+    "DATABASE_URL",
+    "OPENROUTER_API_KEY"
+  ],
+  "globalDependencies": [
+    ".env"
+  ]
 }

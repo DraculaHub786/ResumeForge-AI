@@ -5,6 +5,7 @@
   "description": "Live AI-powered resume builder & editor - monorepo",
   "scripts": {
     "dev": "turbo run dev",
+    "start": "turbo run start",
     "build": "turbo run build",
     "build:all": "turbo run build --filter=!@resume-builder/docs",
     "lint": "turbo run lint",
