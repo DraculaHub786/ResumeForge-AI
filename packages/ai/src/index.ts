@@ -1,4 +1,10 @@
-export { complete, type CompleteResult, type ModelConfig } from './client.js';
+export {
+  complete,
+  getActiveAiProvider,
+  type CompleteResult,
+  type ModelConfig,
+  type ActiveProvider,
+} from './client.js';
 export {
   buildEnhancePrompt,
   PROMPT_PRESETS,

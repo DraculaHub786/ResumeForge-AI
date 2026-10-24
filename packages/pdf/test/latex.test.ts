@@ -127,3 +127,47 @@ describe('resumeToLatex', () => {
     expect(letter).not.toBe(a4);
   });
 });
+
+describe('buildExportFilename', () => {
+  it('formats filename with user name and Resume suffix', async () => {
+    const { buildExportFilename } = await import('../src/layout.js');
+    expect(buildExportFilename({ profile: { fullName: 'Alex Rivera' } })).toBe('Alex-Rivera-Resume.pdf');
+    expect(buildExportFilename({ profile: { fullName: 'Alexander Rivera' } }, 'res_mvlgmqezei1br4o4', 'docx')).toBe('Alexander-Rivera-Resume.docx');
+    expect(buildExportFilename({ basics: { name: 'Jishnu Mondal' } }, 'Untitled', 'png')).toBe('Jishnu-Mondal-Resume.png');
+  });
+
+  it('avoids duplicate -Resume and strips res_ internal IDs', async () => {
+    const { buildExportFilename } = await import('../src/layout.js');
+    expect(buildExportFilename(null, 'res_mvlc8dimknkegy8r')).toBe('Resume.pdf');
+    expect(buildExportFilename(null, 'Alex-Rivera-Resume.pdf')).toBe('Alex-Rivera-Resume.pdf');
+    expect(buildExportFilename({ profile: { fullName: 'Alex Rivera' } }, 'Alex-Rivera-Resume')).toBe('Alex-Rivera-Resume.pdf');
+  });
+});
+
+describe('compileLatexDocument', () => {
+  it('clears resume and returns empty content when LaTeX is empty string', async () => {
+    const { compileLatexDocument } = await import('../src/latex.js');
+    const existing = { profile: { fullName: 'Alex Rivera', links: [] }, experience: [{ id: '1', position: 'Eng', company: 'Co', period: {}, highlights: [] }] } as any;
+    const res = compileLatexDocument('', existing);
+    expect(res.success).toBe(true);
+    expect(res.content.profile.fullName).toBe('');
+    expect(res.content.experience).toEqual([]);
+    expect(res.content.education).toEqual([]);
+  });
+
+  it('reflects section deletion when LaTeX code removes a section', async () => {
+    const { compileLatexDocument } = await import('../src/latex.js');
+    const existing = {
+      profile: { fullName: 'Alex Rivera', links: [] },
+      summary: 'Old summary',
+      experience: [{ id: '1', position: 'Old Job', company: 'Old Co', period: {}, highlights: [] }],
+    } as any;
+    const texOnlyProfile = `\\begin{document}\\begin{center}{\\LARGE\\bfseries Jane Doe}\\end{center}\\end{document}`;
+    const res = compileLatexDocument(texOnlyProfile, existing);
+    expect(res.content.profile.fullName).toBe('Jane Doe');
+    expect(res.content.summary).toBe('');
+    expect(res.content.experience).toEqual([]);
+  });
+});
+
+

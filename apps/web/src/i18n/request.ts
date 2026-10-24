@@ -15,11 +15,16 @@ export default getRequestConfig(async () => {
   const requested = (await cookies()).get('locale')?.value;
   const locale = isLocale(requested) ? requested : defaultLocale;
 
+  let messages;
+  try {
+    messages = (await import(`./messages/${locale}.json`)).default;
+  } catch {
+    messages = (await import('./messages/en.json')).default;
+  }
+
   return {
     locale,
-    messages: (await import(`./messages/${locale}.json`)).default,
-    // A missing translation falls back to the key rather than throwing, so a
-    // partially translated catalogue never breaks a page.
+    messages,
     getMessageFallback: () => '',
   };
 });

@@ -99,15 +99,22 @@ function LoginCard() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t('login.title')}</CardTitle>
+    <Card className="rounded-2xl border-border/80 bg-card/95 shadow-2xl backdrop-blur-xl">
+      <CardHeader className="space-y-1">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-xl font-bold tracking-tight">{t('login.title')}</CardTitle>
+          <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-semibold text-orange-400">
+            Sign In
+          </span>
+        </div>
         <CardDescription>{t('login.subtitle')}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           <div className="space-y-2">
-            <Label htmlFor="email">{t('login.email')}</Label>
+            <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {t('login.email')}
+            </Label>
             <Input
               id="email"
               type="email"
@@ -115,11 +122,14 @@ function LoginCard() {
               placeholder={t('login.emailPlaceholder')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="bg-background/60 focus-visible:ring-orange-500/40"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">{t('login.password')}</Label>
+            <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {t('login.password')}
+            </Label>
             <Input
               id="password"
               type="password"
@@ -127,23 +137,28 @@ function LoginCard() {
               placeholder={t('login.passwordPlaceholder')}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="bg-background/60 focus-visible:ring-orange-500/40"
             />
           </div>
 
           {error && (
-            <p role="alert" className="text-sm text-destructive">
+            <p role="alert" className="rounded-lg border border-destructive/20 bg-destructive/10 p-2.5 text-xs text-destructive">
               {error}
             </p>
           )}
 
-          <Button type="submit" className="w-full" disabled={pending}>
+          <Button
+            type="submit"
+            className="w-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-orange-500/10"
+            disabled={pending}
+          >
             {pending ? t('login.submitting') : t('login.submit')}
           </Button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-muted-foreground">
+        <p className="mt-5 text-center text-xs text-muted-foreground">
           {t('login.noAccount')}{' '}
-          <Link href="/auth/register" className="font-medium text-primary hover:underline">
+          <Link href="/auth/register" className="font-semibold text-orange-400 hover:text-orange-300 transition-colors">
             {t('login.createOne')}
           </Link>
         </p>

@@ -46,4 +46,33 @@ export interface AtsCheckResult {
   suggestions: string[];
   /** Job keywords that do not appear in the resume. */
   missingKeywords: string[];
+  matchedKeywords?: string[];
+}
+
+/** Input for AI Resume Generation from user background / prompt. */
+export interface GenerateResumeInput {
+  role: string;
+  experienceLevel?: 'entry' | 'mid' | 'senior' | 'lead' | 'executive';
+  industry?: string;
+  userNotes: string;
+  targetJobDescription?: string;
+  targetTone?: string;
+}
+
+/** Result of AI Resume Generation. */
+export interface GenerateResumeResult {
+  content: ResumeContent;
+  provider: string;
+  model: string;
+  headline: string;
+  summary: string;
+}
+
+/** In-depth audit with anti-hallucination validation and ATS match. */
+export interface AuditResumeResult extends AtsCheckResult {
+  matchedKeywords: string[];
+  hallucinationWarnings: string[];
+  strengths: string[];
+  provider: string;
+  model: string;
 }

@@ -37,6 +37,7 @@ const env = {
   CORS_ORIGIN: `${WEB_URL},http://localhost:${API_PORT}`,
   // The suite must never call a paid model.
   OPENROUTER_API_KEY: '',
+  GROQ_API_KEY: '',
   LOG_LEVEL: 'warn',
 };
 

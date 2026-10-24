@@ -24,6 +24,9 @@ export const env = {
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
 
   // AI
+  GROQ_API_KEY: process.env.GROQ_API_KEY,
+  GROQ_BASE_URL: process.env.GROQ_BASE_URL ?? 'https://api.groq.com/openai/v1',
+  GROQ_DEFAULT_MODEL: process.env.GROQ_DEFAULT_MODEL ?? 'openai/gpt-oss-20b',
   OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
   OPENROUTER_BASE_URL: process.env.OPENROUTER_BASE_URL ?? 'https://openrouter.ai/api/v1',
   OPENROUTER_DEFAULT_MODEL: process.env.OPENROUTER_DEFAULT_MODEL ?? 'openai/gpt-4o-mini',

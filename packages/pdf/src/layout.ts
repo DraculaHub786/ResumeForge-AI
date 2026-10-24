@@ -67,3 +67,55 @@ export function ptToMm(pt: number): number {
 export function inToMm(inches: number): number {
   return inches * MM_PER_INCH;
 }
+
+/** Build a clean, professional filename: e.g. "Alex-Rivera-Resume.pdf". */
+export function buildExportFilename(
+  content?: {
+    profile?: { fullName?: string; name?: string };
+    basics?: { name?: string; fullName?: string };
+    contact?: { name?: string };
+  } | null,
+  fallbackTitle?: string,
+  ext: string = 'pdf'
+): string {
+  const cleanExt = ext.replace(/^\.+/, '');
+  const name =
+    content?.profile?.fullName?.trim() ||
+    (content as any)?.profile?.name?.trim() ||
+    content?.basics?.name?.trim() ||
+    content?.basics?.fullName?.trim() ||
+    (content as any)?.contact?.name?.trim();
+
+  const formatCleanName = (raw: string) => {
+    // Strip trailing .pdf / .docx / .tex / etc. if present
+    const stripped = raw.replace(new RegExp(`\\.${cleanExt}$`, 'i'), '').trim();
+    const clean = stripped
+      .replace(/[^a-zA-Z0-9\s_-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+    if (!clean) return null;
+    if (clean.toLowerCase().endsWith('-resume')) {
+      return `${clean}.${cleanExt}`;
+    }
+    return `${clean}-Resume.${cleanExt}`;
+  };
+
+  if (name) {
+    const formatted = formatCleanName(name);
+    if (formatted) return formatted;
+  }
+
+  if (
+    fallbackTitle &&
+    !fallbackTitle.startsWith('res_') &&
+    fallbackTitle.toLowerCase() !== 'untitled' &&
+    fallbackTitle.toLowerCase() !== 'resume' &&
+    fallbackTitle.toLowerCase() !== 'new resume'
+  ) {
+    const formatted = formatCleanName(fallbackTitle);
+    if (formatted) return formatted;
+  }
+
+  return `Resume.${cleanExt}`;
+}
+

@@ -21,9 +21,11 @@ import { toast } from 'sonner';
 import {
   exportPdf,
   exportPdfCanvas,
+  exportServerPdf,
   exportPng,
   exportDocx,
   exportLatex,
+  buildExportFilename,
   type ExportFormat,
 } from '@/lib/export';
 import type { ResumeContent, ResumeMetadata } from '@resume-builder/types';
@@ -60,35 +62,59 @@ export function ExportModal({
   const [format, setFormat] = useState<ExportFormat>('pdf');
   const [busy, setBusy] = useState(false);
 
+  const currentExt = format === 'latex' ? 'tex' : format;
+  const currentFilename = buildExportFilename(content, title, currentExt);
+
   const handleExport = async () => {
     setBusy(true);
     try {
+      const ext = format === 'latex' ? 'tex' : format;
+      const targetFilename = buildExportFilename(content, title, ext);
+      let previewUrl: string | null = null;
+
       switch (format) {
         case 'pdf': {
-          const el = previewRef.current as HTMLElement | null;
-          if (!el) throw new Error('Preview not ready');
           try {
-            await exportPdf(el, title, metadata);
+            const res = await exportServerPdf(content, metadata, title);
+            previewUrl = res.url;
           } catch {
-            await exportPdfCanvas(el, title, metadata);
+            const el = (document.querySelector('[data-testid="resume-preview"]') || previewRef.current) as HTMLElement | null;
+            if (el) {
+              await exportPdfCanvas(el, targetFilename.replace(/\.pdf$/, ''), metadata);
+            } else {
+              throw new Error('PDF export failed. Please check network connection.');
+            }
           }
-          toast.success(t('toasts.pdf'));
           break;
         }
-        case 'docx':
-          await exportDocx(content, metadata, title);
-          toast.success(t('toasts.docx'));
+        case 'docx': {
+          const res = await exportDocx(content, metadata, title);
+          previewUrl = res.url;
           break;
-        case 'png':
-          if (!previewRef.current) throw new Error('Preview not ready');
-          await exportPng(previewRef.current, title);
-          toast.success(t('toasts.png'));
+        }
+        case 'png': {
+          const el = (document.querySelector('[data-testid="resume-preview"]') || previewRef.current) as HTMLElement | null;
+          if (!el) throw new Error('Preview not ready');
+          await exportPng(el, targetFilename.replace(/\.png$/, ''));
           break;
-        case 'latex':
-          exportLatex(content, metadata, title);
-          toast.success(t('toasts.latex'));
+        }
+        case 'latex': {
+          const res = await exportLatex(content, metadata, title);
+          previewUrl = res.url;
           break;
+        }
       }
+
+      toast.success(`Saved ${targetFilename}`, {
+        description: 'Downloaded to your device. Check your Downloads or Save dialog.',
+        action: previewUrl
+          ? {
+              label: 'Open File',
+              onClick: () => window.open(previewUrl!, '_blank'),
+            }
+          : undefined,
+      });
+
       onOpenChange(false);
     } catch (error) {
       toast.error(
@@ -106,6 +132,16 @@ export function ExportModal({
           <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
+
+        <div className="rounded-lg border bg-muted/40 p-3 text-xs space-y-1.5">
+          <div className="flex items-center justify-between font-mono">
+            <span className="text-muted-foreground font-sans font-medium">Save As:</span>
+            <span className="font-semibold text-primary">{currentFilename}</span>
+          </div>
+          <p className="text-[11px] text-muted-foreground">
+            Prompts your system Save As dialog to choose a folder, or saves directly to your Downloads folder.
+          </p>
+        </div>
 
         <RadioGroup value={format} onValueChange={(v) => setFormat(v as ExportFormat)}>
           <div className="space-y-2">

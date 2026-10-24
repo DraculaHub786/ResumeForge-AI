@@ -8,7 +8,7 @@
  */
 
 import { createOpenAI } from '@ai-sdk/openai';
-import { streamText } from 'ai';
+import { generateText } from 'ai';
 
 export type ModelConfig = {
   model?: string;
@@ -19,16 +19,44 @@ export type ModelConfig = {
   timeoutMs?: number;
 };
 
-function makeOpenRouter(baseUrl?: string, apiKey?: string) {
-  if (!apiKey) return null;
-  return createOpenAI({
-    baseURL: baseUrl ?? 'https://openrouter.ai/api/v1',
-    apiKey,
-    headers: {
-      'HTTP-Referer': 'https://resumeforge.ai',
-      'X-Title': 'ResumeForge AI',
-    },
-  });
+export interface ActiveProvider {
+  client: ReturnType<typeof createOpenAI>;
+  defaultModel: string;
+  name: 'Groq' | 'OpenRouter';
+}
+
+export function getActiveAiProvider(): ActiveProvider | null {
+  const groqKey = process.env.GROQ_API_KEY;
+  if (groqKey) {
+    const groqBase = process.env.GROQ_BASE_URL ?? 'https://api.groq.com/openai/v1';
+    return {
+      client: createOpenAI({
+        baseURL: groqBase,
+        apiKey: groqKey,
+      }),
+      defaultModel: process.env.GROQ_DEFAULT_MODEL ?? 'openai/gpt-oss-20b',
+      name: 'Groq',
+    };
+  }
+
+  const openrouterKey = process.env.OPENROUTER_API_KEY;
+  if (openrouterKey) {
+    const openrouterBase = process.env.OPENROUTER_BASE_URL ?? 'https://openrouter.ai/api/v1';
+    return {
+      client: createOpenAI({
+        baseURL: openrouterBase,
+        apiKey: openrouterKey,
+        headers: {
+          'HTTP-Referer': 'https://resumeforge.ai',
+          'X-Title': 'ResumeForge AI',
+        },
+      }),
+      defaultModel: process.env.OPENROUTER_DEFAULT_MODEL ?? 'openai/gpt-4o-mini',
+      name: 'OpenRouter',
+    };
+  }
+
+  return null;
 }
 
 /** Result of a completion call. */
@@ -37,10 +65,12 @@ export type CompleteResult = {
   stream?: AsyncGenerator<string>;
   /** True when the deterministic fallback produced the text. */
   fallback?: boolean;
+  provider?: string;
+  model?: string;
 };
 
 /** Default provider timeout. */
-const DEFAULT_TIMEOUT_MS = 20_000;
+const DEFAULT_TIMEOUT_MS = 30_000;
 
 /**
  * Circuit breaker.
@@ -104,63 +134,58 @@ function withDeadline<T>(promise: Promise<T>, ms: number, label: string): Promis
   });
 }
 
-/** Call OpenRouter (or the deterministic fallback). */
+/** Call Groq or OpenRouter (or the deterministic fallback). */
 export async function complete(
   messages: Array<{ role: 'system' | 'user'; content: string }>,
   config: ModelConfig = {}
 ): Promise<CompleteResult> {
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  const baseUrl = process.env.OPENROUTER_BASE_URL;
-  const model = config.model ?? process.env.OPENROUTER_DEFAULT_MODEL ?? 'openai/gpt-4o-mini';
-
-  const openai = makeOpenRouter(baseUrl, apiKey);
+  const active = getActiveAiProvider();
   const userContent = messages[messages.length - 1]?.content ?? '';
 
-  if (!openai) {
+  if (!active) {
     // No key — deterministic fallback so the feature still works locally.
-    return { text: fallbackComplete(userContent, config), fallback: true };
+    return { text: fallbackComplete(userContent, config), fallback: true, provider: 'local', model: 'heuristic' };
   }
 
   if (!isProviderAvailable()) {
     // Provider is known to be down — answer immediately from the fallback.
-    return { text: fallbackComplete(userContent, config), fallback: true };
+    return { text: fallbackComplete(userContent, config), fallback: true, provider: 'local', model: 'heuristic' };
   }
 
+  const model = config.model ?? active.defaultModel;
   const timeoutMs = config.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const controller = new AbortController();
   const abortTimer = setTimeout(() => controller.abort(), timeoutMs);
   abortTimer.unref?.();
 
   try {
-    const result = await streamText({
-      model: openai(model),
-      system: messages[0]?.role === 'system' ? messages[0].content : undefined,
-      messages: messages.filter((m) => m.role !== 'system'),
-      temperature: config.temperature ?? 0.7,
-      topP: config.topP ?? 0.9,
-      maxTokens: config.maxTokens ?? 500,
-      // A single attempt: the request deadline below is the real guarantee,
-      // and SDK-level retries would each restart the clock.
-      maxRetries: 0,
-      abortSignal: controller.signal,
-    });
-
-    // `result.text` is a promise that resolves with the full completion. The
-    // stream is exposed alongside it so callers can render tokens as they
-    // arrive, but `text` is always populated — callers rely on it.
-    const text = await withDeadline(result.text, timeoutMs, 'Provider completion');
+    const result = await withDeadline(
+      generateText({
+        model: active.client(model),
+        system: messages[0]?.role === 'system' ? messages[0].content : undefined,
+        messages: messages.filter((m) => m.role !== 'system'),
+        temperature: config.temperature ?? 0.6,
+        topP: config.topP ?? 0.9,
+        maxTokens: config.maxTokens ?? 1500,
+        abortSignal: controller.signal,
+      }),
+      timeoutMs,
+      `${active.name} completion`
+    );
 
     recordProviderSuccess();
 
     return {
-      text,
-      stream: result.textStream as unknown as AsyncGenerator<string>,
+      text: result.text,
+      fallback: false,
+      provider: active.name,
+      model,
     };
   } catch {
     // The provider timed out or errored — degrade to the local enhancer
     // rather than failing the user's request.
     recordProviderFailure();
-    return { text: fallbackComplete(userContent, config), fallback: true };
+    return { text: fallbackComplete(userContent, config), fallback: true, provider: 'local', model: 'heuristic' };
   } finally {
     clearTimeout(abortTimer);
   }

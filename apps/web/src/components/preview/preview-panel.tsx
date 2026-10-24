@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@resume-builder/ui';
 import { ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
@@ -30,7 +30,7 @@ export function PreviewPanel({
   pageMargin = 0.6,
   pageSize = 'letter',
 }: PreviewPanelProps) {
-  const zoom = useRef(1);
+  const [zoomLevel, setZoomLevel] = useState(0.85);
   const containerRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('preview');
   const tTemplates = useTranslations('templates');
@@ -41,40 +41,57 @@ export function PreviewPanel({
     : 'single-column';
 
   const setZoom = (next: number) => {
-    zoom.current = Math.min(Math.max(next, 0.4), 1.6);
+    const clamped = Math.min(Math.max(Number(next.toFixed(2)), 0.4), 1.6);
+    setZoomLevel(clamped);
     if (containerRef.current) {
-      containerRef.current.style.transform = `scale(${zoom.current})`;
+      containerRef.current.style.transform = `scale(${clamped})`;
       containerRef.current.style.transformOrigin = 'top center';
     }
   };
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.style.transform = `scale(${zoomLevel})`;
+      containerRef.current.style.transformOrigin = 'top center';
+    }
+  }, [zoomLevel]);
 
   const badgeName = tTemplates.has(`items.${template}.name`)
     ? tTemplates(`items.${template}.name`)
     : templateDef?.name ?? t('defaultTemplate');
 
   return (
-    <Card className="h-full overflow-hidden">
-      <CardHeader className="flex-row items-center justify-between space-y-0 py-3">
-        <CardTitle className="text-sm">{t('livePreview')}</CardTitle>
+    <Card className="h-full overflow-hidden border border-slate-300 dark:border-slate-700 shadow-sm">
+      <CardHeader className="flex-row items-center justify-between space-y-0 py-3 bg-muted/20 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
-          <Badge variant="secondary" className="text-xs" data-testid="template-badge">
+          <CardTitle className="text-sm font-bold">{t('livePreview')}</CardTitle>
+          <Badge variant="outline" className="text-[11px] font-mono px-1.5 py-0 bg-background text-muted-foreground border-slate-300 dark:border-slate-700">
+            {pageSize.toUpperCase()} Full Sheet
+          </Badge>
+        </div>
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary" className="text-xs bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-medium" data-testid="template-badge">
             {badgeName}
           </Badge>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 border border-slate-300 dark:border-slate-700 rounded-lg p-0.5 bg-background shadow-xs">
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7"
-              onClick={() => setZoom(zoom.current - 0.1)}
+              className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              onClick={() => setZoom(zoomLevel - 0.1)}
               aria-label={t('zoomOut')}
             >
               <ZoomOut className="h-3.5 w-3.5" />
             </Button>
+            <span className="text-[11px] font-mono px-1.5 text-muted-foreground min-w-[3rem] text-center select-none font-medium">
+              {Math.round(zoomLevel * 100)}%
+            </span>
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7"
-              onClick={() => setZoom(1)}
+              className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              onClick={() => setZoom(0.85)}
+              title="Reset to Fit"
               aria-label={t('resetZoom')}
             >
               <RotateCcw className="h-3.5 w-3.5" />
@@ -82,8 +99,8 @@ export function PreviewPanel({
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7"
-              onClick={() => setZoom(zoom.current + 0.1)}
+              className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              onClick={() => setZoom(zoomLevel + 0.1)}
               aria-label={t('zoomIn')}
             >
               <ZoomIn className="h-3.5 w-3.5" />

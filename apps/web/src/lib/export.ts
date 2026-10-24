@@ -18,29 +18,20 @@ import {
   exportPdf as pdfExport,
   exportPng as pngExport,
   exportPdfCanvasFallback,
+  triggerFileSave,
 } from '@resume-builder/pdf/browser';
-import { resumeToLatexFromMetadata } from '@resume-builder/pdf';
+import { resumeToLatexFromMetadata, buildExportFilename } from '@resume-builder/pdf';
+
+export { buildExportFilename, triggerFileSave };
 
 export type ExportFormat = 'pdf' | 'docx' | 'png' | 'latex';
 
 function triggerDownload(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  triggerFileSave(blob, filename);
 }
 
 function safeFilename(title: string, ext: string) {
-  const base =
-    (title || 'resume')
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '') || 'resume';
-  return `${base}.${ext}`;
+  return buildExportFilename(null, title, ext);
 }
 
 // ---------------------------------------------------------------------------
@@ -87,6 +78,27 @@ export async function exportPng(
   await pngExport(element, title);
 }
 
+import { API_URL } from './env';
+
+export async function exportServerPdf(
+  content: ResumeContent,
+  metadata?: Partial<ResumeMetadata>,
+  title?: string
+): Promise<{ blob: Blob; filename: string; url: string }> {
+  const res = await fetch(`${API_URL}/api/v1/export/pdf`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content, metadata }),
+  });
+  if (!res.ok) throw new Error(`Server PDF export failed with status ${res.status}`);
+  const blob = await res.blob();
+  const filename = buildExportFilename(content, title, 'pdf');
+  await triggerFileSave(blob, filename);
+  const url = URL.createObjectURL(blob);
+  return { blob, filename, url };
+}
+
+
 // ---------------------------------------------------------------------------
 // DOCX
 // ---------------------------------------------------------------------------
@@ -99,9 +111,10 @@ export async function exportPng(
  */
 export async function exportDocx(
   content: ResumeContent,
-  metadata: ResumeMetadata,
+  metadata: Partial<ResumeMetadata> | undefined,
   title: string
-): Promise<void> {
+): Promise<{ blob: Blob; filename: string; url: string }> {
+
   const {
     Document,
     Packer,
@@ -111,7 +124,7 @@ export async function exportDocx(
     AlignmentType,
   } = await import('docx');
 
-  const accent = (metadata.theme.primaryColor ?? '#1e40af').replace('#', '');
+  const accent = (metadata?.theme?.primaryColor ?? '#1e40af').replace('#', '');
   const children: DocxParagraph[] = [];
 
   const profile = content.profile ?? ({} as ResumeContent['profile']);
@@ -148,7 +161,10 @@ export async function exportDocx(
   if (profile.email) contact.push(profile.email);
   if (profile.phone) contact.push(profile.phone);
   if (profile.location) contact.push(profile.location);
-  for (const link of profile.links ?? []) contact.push(`${link.label}: ${link.url}`);
+  for (const link of profile.links ?? []) {
+    if (link?.label && link?.url) contact.push(`${link.label}: ${link.url}`);
+    else if (link?.label) contact.push(link.label);
+  }
   if (contact.length) {
     children.push(
       new Paragraph({
@@ -231,7 +247,7 @@ export async function exportDocx(
           italic: true,
         })
       );
-      item.highlights.filter(Boolean).forEach((h) => children.push(bullet(h)));
+      (item.highlights ?? []).filter(Boolean).forEach((h) => children.push(bullet(h)));
     }
   }
 
@@ -246,7 +262,7 @@ export async function exportDocx(
   if (content.skills?.length) {
     children.push(heading('Skills'));
     for (const group of content.skills) {
-      children.push(body(`${group.name}: ${group.skills.join(', ')}`));
+      children.push(body(`${group.name}: ${(group.skills ?? []).join(', ')}`));
     }
   }
 
@@ -255,18 +271,18 @@ export async function exportDocx(
     for (const item of content.projects) {
       children.push(line(item.name, item.role));
       if (item.description) children.push(body(item.description));
-      item.highlights.filter(Boolean).forEach((h) => children.push(bullet(h)));
+      (item.highlights ?? []).filter(Boolean).forEach((h) => children.push(bullet(h)));
     }
   }
 
   if (content.achievements?.length) {
     children.push(heading('Achievements'));
-    content.achievements.filter(Boolean).forEach((a) => children.push(bullet(a)));
+    (content.achievements ?? []).filter(Boolean).forEach((a) => children.push(bullet(a)));
   }
 
   if (content.certifications?.length) {
     children.push(heading('Certifications'));
-    for (const c of content.certifications) {
+    for (const c of content.certifications ?? []) {
       children.push(
         body(`${c.name} — ${c.issuer}${c.date ? ` (${c.date})` : ''}`)
       );
@@ -275,7 +291,7 @@ export async function exportDocx(
 
   if (content.publications?.length) {
     children.push(heading('Publications'));
-    for (const p of content.publications) {
+    for (const p of content.publications ?? []) {
       children.push(
         body(`${p.title} — ${p.publisher}${p.date ? ` (${p.date})` : ''}`)
       );
@@ -284,7 +300,7 @@ export async function exportDocx(
 
   if (content.languages?.length) {
     children.push(heading('Languages'));
-    for (const l of content.languages) {
+    for (const l of content.languages ?? []) {
       children.push(body(`${l.name}${l.proficiency ? ` — ${l.proficiency}` : ''}`));
     }
   }
@@ -293,22 +309,27 @@ export async function exportDocx(
     if (section.visible === false) continue;
     children.push(heading(section.title));
     if (section.description) children.push(body(section.description));
-    section.items.filter(Boolean).forEach((i: string) => children.push(bullet(i)));
+    (section.items ?? []).filter(Boolean).forEach((i: string) => children.push(bullet(i)));
   }
+
+  const marginIn = typeof metadata?.pageMargin === 'number' && !isNaN(metadata.pageMargin)
+    ? metadata.pageMargin
+    : 0.6;
+  const marginDxa = Math.round(marginIn * 1440);
 
   const doc = new Document({
     creator: 'ResumeForge AI',
-    title,
+    title: title || 'Resume',
     description: `Resume for ${profile.fullName || 'user'}`,
     sections: [
       {
         properties: {
           page: {
             margin: {
-              top: Math.round(metadata.pageMargin * 1440),
-              right: Math.round(metadata.pageMargin * 1440),
-              bottom: Math.round(metadata.pageMargin * 1440),
-              left: Math.round(metadata.pageMargin * 1440),
+              top: marginDxa,
+              right: marginDxa,
+              bottom: marginDxa,
+              left: marginDxa,
             },
           },
         },
@@ -318,7 +339,10 @@ export async function exportDocx(
   });
 
   const blob = await Packer.toBlob(doc);
-  triggerDownload(blob, safeFilename(title, 'docx'));
+  const filename = buildExportFilename(content, title, 'docx');
+  await triggerFileSave(blob, filename);
+  const url = URL.createObjectURL(blob);
+  return { blob, filename, url };
 }
 
 // ---------------------------------------------------------------------------
@@ -334,14 +358,16 @@ export function generateLatex(
 }
 
 /** Download the LaTeX source. */
-export function exportLatex(
+export async function exportLatex(
   content: ResumeContent,
   metadata: ResumeMetadata,
   title: string
-): void {
+): Promise<{ blob: Blob; filename: string; url: string }> {
   const latex = generateLatex(content, metadata);
-  triggerDownload(
-    new Blob([latex], { type: 'text/plain;charset=utf-8' }),
-    safeFilename(title, 'tex')
-  );
+  const filename = buildExportFilename(content, title, 'tex');
+  const blob = new Blob([latex], { type: 'text/plain;charset=utf-8' });
+  await triggerFileSave(blob, filename);
+  const url = URL.createObjectURL(blob);
+  return { blob, filename, url };
 }
+

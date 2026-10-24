@@ -20,6 +20,8 @@ import {
   Loader2,
   PanelLeftClose,
   PanelRightClose,
+  Sparkles,
+  Code2,
 } from 'lucide-react';
 import {
   Button,
@@ -43,8 +45,11 @@ import { PreviewPanel } from '@/components/preview/preview-panel';
 import { TemplateGallery } from '@/components/templates/template-gallery';
 import { ExportModal } from '@/components/export/export-modal';
 import { ThemeEditor } from '@/components/builder/theme-editor';
+import { AiAssistantPanel } from '@/components/ai/ai-assistant-panel';
+import { LatexEditorPanel } from '@/components/builder/latex-editor-panel';
 import { UserMenu } from '@/components/user-menu';
 import { LocaleSwitcher } from '@/components/locale-switcher';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function BuilderPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -206,6 +211,7 @@ export default function BuilderPage({ params }: { params: { id: string } }) {
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
+            <ThemeToggle />
             <LocaleSwitcher className="hidden sm:flex" />
             <UserMenu />
             <Button
@@ -233,32 +239,50 @@ export default function BuilderPage({ params }: { params: { id: string } }) {
         {/* Editor column */}
         <div className="space-y-4 min-w-0">
           <Tabs defaultValue="content">
-            <TabsList>
-              <TabsTrigger value="content">{t('tabContent')}</TabsTrigger>
-              <TabsTrigger value="templates">
-                <Layout className="h-3.5 w-3.5 mr-1" />
+            <TabsList className="grid grid-cols-5 w-full h-10 p-1 bg-muted/50 rounded-lg">
+              <TabsTrigger value="content" className="text-xs font-semibold">{t('tabContent')}</TabsTrigger>
+              <TabsTrigger value="ai" className="text-xs font-semibold flex items-center justify-center gap-1 text-orange-600 dark:text-orange-400">
+                <Sparkles className="h-3.5 w-3.5" />
+                AI Studio
+              </TabsTrigger>
+              <TabsTrigger value="templates" className="text-xs font-semibold flex items-center justify-center gap-1">
+                <Layout className="h-3.5 w-3.5" />
                 {t('tabTemplates')}
               </TabsTrigger>
-              <TabsTrigger value="design">
-                <Palette className="h-3.5 w-3.5 mr-1" />
+              <TabsTrigger value="design" className="text-xs font-semibold flex items-center justify-center gap-1">
+                <Palette className="h-3.5 w-3.5" />
                 {t('tabDesign')}
+              </TabsTrigger>
+              <TabsTrigger value="latex" className="text-xs font-semibold flex items-center justify-center gap-1 font-mono">
+                <Code2 className="h-3.5 w-3.5" />
+                LaTeX
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="content">
-              <EditorSidebar draft={draft} updateDraft={updateDraft} />
+              <EditorSidebar draft={draft} updateDraft={updateDraft} theme={theme} setTheme={setTheme} />
+            </TabsContent>
+
+            <TabsContent value="ai">
+              <AiAssistantPanel draft={draft} updateDraft={updateDraft} />
             </TabsContent>
 
             <TabsContent value="templates">
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-sm">{t('chooseTemplate')}</CardTitle>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-semibold">{t('chooseTemplate')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <TemplateGallery
                     currentTemplate={template}
-                    onSelect={(id) => {
+                    onSelect={(id, def) => {
                       setTemplate(id);
+                      if (def) {
+                        setTheme({
+                          fontFamily: def.defaultFont,
+                          primaryColor: def.accentColor || theme.primaryColor,
+                        });
+                      }
                       toast.success(t('templateApplied'));
                     }}
                   />
@@ -268,6 +292,10 @@ export default function BuilderPage({ params }: { params: { id: string } }) {
 
             <TabsContent value="design">
               <ThemeEditor theme={theme} setTheme={setTheme} />
+            </TabsContent>
+
+            <TabsContent value="latex">
+              <LatexEditorPanel draft={draft} theme={theme} template={template} updateDraft={updateDraft} />
             </TabsContent>
           </Tabs>
         </div>
@@ -293,7 +321,7 @@ export default function BuilderPage({ params }: { params: { id: string } }) {
         onOpenChange={setExportOpen}
         content={draft.content}
         metadata={draft.metadata}
-        title={draft.title ?? 'resume'}
+        title={draft.content?.profile?.fullName || draft.title || 'Resume'}
         previewRef={previewRef}
       />
     </main>

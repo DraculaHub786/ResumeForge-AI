@@ -210,6 +210,16 @@ export interface Theme {
   uppercaseHeadings: boolean;
   /** Use a coloured sidebar (two-column templates only). */
   sidebarStyle: 'none' | 'solid' | 'tinted';
+  /** Alignment of the name and profile header. */
+  headerAlignment?: 'left' | 'center' | 'right';
+  /** Alignment of the section titles. */
+  sectionAlignment?: 'left' | 'center' | 'right';
+  /** Text alignment of the body paragraphs. */
+  contentAlignment?: 'left' | 'justify' | 'center';
+  /** Bullet point style for lists. */
+  bulletStyle?: 'disc' | 'circle' | 'square' | 'dash' | 'arrow' | 'none';
+  /** Spacing between sections in points. */
+  sectionSpacing?: number;
 }
 
 export interface ResumeMetadata {

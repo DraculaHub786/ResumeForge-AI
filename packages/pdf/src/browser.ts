@@ -8,7 +8,7 @@
  */
 
 import type { ResumeMetadata } from '@resume-builder/types';
-import { getPageGeometry } from './layout.js';
+import { getPageGeometry, buildExportFilename } from './layout.js';
 
 export interface BrowserPdfOptions {
   /** Page size, used for the `@page` rule and the raster fallback. */
@@ -23,7 +23,30 @@ export interface BrowserPdfOptions {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function triggerDownload(blob: Blob, filename: string) {
+export async function triggerFileSave(blob: Blob, filename: string): Promise<boolean> {
+  if (typeof window !== 'undefined' && 'showSaveFilePicker' in window) {
+    try {
+      const ext = filename.split('.').pop() || 'pdf';
+      const mime = blob.type || 'application/octet-stream';
+      const handle = await (window as any).showSaveFilePicker({
+        suggestedName: filename,
+        types: [
+          {
+            description: `${ext.toUpperCase()} Document`,
+            accept: { [mime]: [`.${ext}`] },
+          },
+        ],
+      });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      return true;
+    } catch (err: any) {
+      if (err.name === 'AbortError') return false;
+      // Fall through to anchor click on other errors
+    }
+  }
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -31,16 +54,16 @@ function triggerDownload(blob: Blob, filename: string) {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  return true;
+}
+
+function triggerDownload(blob: Blob, filename: string) {
+  triggerFileSave(blob, filename);
 }
 
 export function safeFilename(title: string, ext: string): string {
-  const base =
-    (title ?? 'resume')
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '') || 'resume';
-  return `${base}.${ext}`;
+  return buildExportFilename(null, title, ext);
 }
 
 function escapeHtml(text: string): string {
@@ -121,6 +144,14 @@ export async function exportPdfCanvasFallback(
     scale: options.scale ?? 2,
     useCORS: true,
     backgroundColor: '#ffffff',
+    onclone: (clonedDoc) => {
+      const target = (clonedDoc.querySelector('[data-testid="resume-preview"]') || clonedDoc.body.firstElementChild) as HTMLElement | null;
+      if (target) {
+        target.style.boxShadow = 'none';
+        target.style.border = 'none';
+        target.style.margin = '0';
+      }
+    },
   });
 
   const imgData = canvas.toDataURL('image/png');
@@ -149,7 +180,8 @@ export async function exportPdfCanvasFallback(
     heightLeft -= pageHeight;
   }
 
-  pdf.save(safeFilename(title, 'pdf'));
+  const blob = pdf.output('blob');
+  await triggerFileSave(blob, safeFilename(title, 'pdf'));
 }
 
 /**
@@ -163,10 +195,8 @@ export async function exportPdf(
 ): Promise<void> {
   try {
     await exportPdfFromElement(element, title, options);
-  } catch (error) {
-    if (error instanceof Error && error.message.includes('Pop-up blocked')) {
-      throw error;
-    }
+  } catch {
+    // If browser print window was blocked or failed, fall back to canvas PDF download
     await exportPdfCanvasFallback(element, title, options);
   }
 }
@@ -185,10 +215,18 @@ export async function exportPng(
     scale,
     useCORS: true,
     backgroundColor: '#ffffff',
+    onclone: (clonedDoc) => {
+      const target = (clonedDoc.querySelector('[data-testid="resume-preview"]') || clonedDoc.body.firstElementChild) as HTMLElement | null;
+      if (target) {
+        target.style.boxShadow = 'none';
+        target.style.border = 'none';
+        target.style.margin = '0';
+      }
+    },
   });
   const blob = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob(resolve, 'image/png')
   );
   if (!blob) throw new Error('Could not render the preview as an image.');
-  triggerDownload(blob, safeFilename(title, 'png'));
+  await triggerFileSave(blob, safeFilename(title, 'png'));
 }

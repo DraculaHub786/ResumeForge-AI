@@ -114,7 +114,7 @@ export async function aiEnhance(
   },
   config?: { model?: string; temperature?: number }
 ) {
-  return request(`${BASE_URL}/api/v1/ai/enhance`, {
+  return request<{ enhanced: string; fallback?: boolean }>(`${BASE_URL}/api/v1/ai/enhance`, {
     method: 'POST',
     body: JSON.stringify(body),
     ...(config?.model ? { headers: { 'x-model': config.model } } : {}),
@@ -125,7 +125,7 @@ export async function aiRewriteSummary(
   content: string,
   targetJobTitle?: string
 ) {
-  return request(`${BASE_URL}/api/v1/ai/rewrite-summary`, {
+  return request<{ enhanced: string }>(`${BASE_URL}/api/v1/ai/rewrite-summary`, {
     method: 'POST',
     body: JSON.stringify({ content, targetJobTitle }),
   });
@@ -135,16 +135,80 @@ export async function aiAchievementGenerator(
   content: string,
   targetJobTitle?: string
 ) {
-  return request(`${BASE_URL}/api/v1/ai/achievement-generator`, {
+  return request<{ enhanced: string }>(`${BASE_URL}/api/v1/ai/achievement-generator`, {
     method: 'POST',
     body: JSON.stringify({ content, targetJobTitle }),
   });
 }
 
-export async function aiAtsCheck(content: string) {
-  return request(`${BASE_URL}/api/v1/ai/ats-check`, {
+export async function aiAtsCheck(content: string, targetJobDescription?: string) {
+  return request<{ score: number; issues: string[]; suggestions: string[]; missingKeywords: string[]; matchedKeywords?: string[] }>(`${BASE_URL}/api/v1/ai/ats-check`, {
     method: 'POST',
-    body: JSON.stringify({ content }),
+    body: JSON.stringify({ content, targetJobDescription }),
+  });
+}
+
+export async function aiGetStatus(): Promise<{ active: boolean; provider: string; model: string }> {
+  return request(`${BASE_URL}/api/v1/ai/status`);
+}
+
+export async function aiGenerateResume(data: {
+  role: string;
+  experienceLevel?: string;
+  industry?: string;
+  userNotes: string;
+  targetJobDescription?: string;
+  targetTone?: string;
+}) {
+  return request<{
+    content: ResumeContent;
+    provider: string;
+    model: string;
+    headline: string;
+    summary: string;
+  }>(`${BASE_URL}/api/v1/ai/generate-resume`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function aiAudit(content: string, targetJobDescription?: string) {
+  return request<{
+    score: number;
+    matchedKeywords: string[];
+    missingKeywords: string[];
+    hallucinationWarnings: string[];
+    strengths: string[];
+    issues: string[];
+    suggestions: string[];
+    provider: string;
+    model: string;
+  }>(`${BASE_URL}/api/v1/ai/audit`, {
+    method: 'POST',
+    body: JSON.stringify({ content, targetJobDescription }),
+  });
+}
+
+export async function aiEnhanceResume(content: ResumeContent, instruction?: string) {
+  return request<{
+    content: ResumeContent;
+    enhancementsSummary: string[];
+    provider: string;
+    model: string;
+  }>(`${BASE_URL}/api/v1/ai/enhance-resume`, {
+    method: 'POST',
+    body: JSON.stringify({ content, instruction }),
+  });
+}
+
+export async function aiParseLatex(tex: string) {
+  return request<{
+    content: ResumeContent;
+    provider: string;
+    model: string;
+  }>(`${BASE_URL}/api/v1/ai/parse-latex`, {
+    method: 'POST',
+    body: JSON.stringify({ tex }),
   });
 }
 

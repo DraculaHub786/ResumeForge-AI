@@ -33,6 +33,7 @@ process.env.NODE_ENV = 'test';
 process.env.BETTER_AUTH_SECRET = 'test-secret-not-used-in-production';
 process.env.BETTER_AUTH_URL = 'http://localhost:5000';
 process.env.OPENROUTER_API_KEY = '';
+process.env.GROQ_API_KEY = '';
 
 const DDL = [
   'DROP TABLE IF EXISTS resumes',

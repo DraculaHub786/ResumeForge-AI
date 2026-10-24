@@ -10,9 +10,51 @@ import {
   resumeContentSchema,
   validateResumeForExport,
 } from '@resume-builder/types';
-import { latexFromResume } from './service.js';
+import { parseLatexToResume, buildExportFilename } from '@resume-builder/pdf';
+import { latexFromResume, generatePdfFromResume } from './service.js';
 
 const router = Router();
+
+router.post('/latex/compile', async (req, res) => {
+  try {
+    const { content, metadata, tex, filename } = req.body;
+    let targetContent = content;
+    if (typeof tex === 'string') {
+      targetContent = parseLatexToResume(tex, content);
+    }
+
+    if (!targetContent) {
+      res.status(400).json({ error: 'content or tex is required' });
+      return;
+    }
+    const pdfBuffer = await generatePdfFromResume(targetContent, metadata);
+    const exportName = filename || buildExportFilename(targetContent, metadata?.title, 'pdf');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${exportName}"`);
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error('[error compiling latex]', error);
+    res.status(500).json({ error: 'Failed to compile LaTeX to PDF' });
+  }
+});
+
+router.post('/pdf', async (req, res) => {
+  try {
+    const { content, metadata, filename } = req.body;
+    if (!content) {
+      res.status(400).json({ error: 'content is required' });
+      return;
+    }
+    const pdfBuffer = await generatePdfFromResume(content, metadata);
+    const exportName = filename || buildExportFilename(content, metadata?.title, 'pdf');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${exportName}"`);
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error('[error generating pdf]', error);
+    res.status(500).json({ error: 'Failed to generate PDF' });
+  }
+});
 
 router.post('/latex', (req, res) => {
   try {

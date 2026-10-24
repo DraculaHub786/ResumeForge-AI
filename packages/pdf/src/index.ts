@@ -15,6 +15,7 @@ export {
   mmToPt,
   ptToMm,
   inToMm,
+  buildExportFilename,
   type PageSize,
   type PageGeometry,
 } from './layout.js';
@@ -23,6 +24,12 @@ export {
   resumeToLatex,
   resumeToLatexFromMetadata,
   escapeLatex,
+  unescapeLatex,
+  parseLatexToResume,
+  compileLatexDocument,
   formatPeriod,
   type LatexOptions,
+  type LatexCompilationResult,
+  type CompilerDiagnostic,
 } from './latex.js';
+

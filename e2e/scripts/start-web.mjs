@@ -35,9 +35,20 @@ const nextBin = require.resolve('next/dist/bin/next', { paths: [webDir] });
 
 import fs from 'node:fs';
 
-const hasBuild = fs.existsSync(path.join(webDir, '.next', 'BUILD_ID'));
+const targetMarker = path.join(webDir, '.next', 'e2e-built-api-url.txt');
+let currentBuiltTarget = null;
+if (fs.existsSync(targetMarker)) {
+  try {
+    currentBuiltTarget = fs.readFileSync(targetMarker, 'utf8').trim();
+  } catch {}
+}
+
+const hasBuild =
+  fs.existsSync(path.join(webDir, '.next', 'BUILD_ID')) &&
+  currentBuiltTarget === env.NEXT_PUBLIC_API_URL;
+
 if (!hasBuild && process.env.E2E_SKIP_BUILD !== '1') {
-  console.log('[e2e] Building the web app…');
+  console.log(`[e2e] Building the web app for API at ${env.NEXT_PUBLIC_API_URL}…`);
   const build = spawnSync(isWindows ? 'pnpm.cmd' : 'pnpm', ['--filter=@resume-builder/web', 'build'], {
     cwd: root,
     env,
@@ -48,6 +59,9 @@ if (!hasBuild && process.env.E2E_SKIP_BUILD !== '1') {
     console.error('[e2e] Web build failed.');
     process.exit(build.status ?? 1);
   }
+  try {
+    fs.writeFileSync(targetMarker, env.NEXT_PUBLIC_API_URL, 'utf8');
+  } catch {}
 }
 
 console.log(`[e2e] Web app starting on http://localhost:${WEB_PORT}`);

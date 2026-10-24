@@ -235,4 +235,59 @@ export const AI_PROMPTS = {
     content:
       'You are an ATS compliance analyst. Score resumes 0-100 and identify missing keywords, formatting issues, and weak language. Return JSON: { score: number, issues: string[], suggestions: string[], missingKeywords: string[] }',
   }),
+  'generate-resume': (_ctx: AiPromptInput): SystemMessage => ({
+    role: 'system',
+    content:
+      'You are an expert resume architect and ATS engineer powered by Groq.\n' +
+      'ANTI-HALLUCINATION INSTRUCTIONS:\n' +
+      '1. Strictly ground all generated items on the user-provided background, role, and notes.\n' +
+      '2. Do NOT invent fake employers or fake academic institutions. If missing, use placeholders like "[Company Name]" or "[University Name]".\n' +
+      '3. Transform user duties into strong, measurable accomplishment bullets starting with action verbs (Architected, Spearheaded, Engineered, Streamlined, Led, Optimized).\n' +
+      '4. Output ONLY valid JSON matching this structure without markdown code blocks:\n' +
+      '{\n' +
+      '  "headline": string,\n' +
+      '  "summary": string,\n' +
+      '  "experience": [{ "position": string, "company": string, "period": { "start": string, "current": boolean }, "highlights": string[] }],\n' +
+      '  "skills": [{ "name": string, "skills": string[] }],\n' +
+      '  "education": [{ "degree": string, "institution": string, "period": { "start": string, "end": string } }],\n' +
+      '  "projects": [{ "name": string, "description": string, "highlights": string[], "technologies": string[] }]\n' +
+      '}',
+  }),
+  audit: (_ctx: AiPromptInput): SystemMessage => ({
+    role: 'system',
+    content:
+      'You are a certified ATS Compliance & Resume Quality Auditor powered by Groq.\n' +
+      'Evaluate the resume for ATS compatibility and content integrity.\n' +
+      'Output ONLY a valid JSON object matching:\n' +
+      '{\n' +
+      '  "score": number (0-100),\n' +
+      '  "matchedKeywords": string[],\n' +
+      '  "missingKeywords": string[],\n' +
+      '  "hallucinationWarnings": string[],\n' +
+      '  "strengths": string[],\n' +
+      '  "issues": string[],\n' +
+      '  "suggestions": string[]\n' +
+      '}',
+  }),
+  'enhance-resume': (_ctx: AiPromptInput): SystemMessage => ({
+    role: 'system',
+    content:
+      'You are an elite Resume Enhancer powered by Groq AI.\n' +
+      'Your task is to take an edited resume and enhance it to world-class professional standards.\n' +
+      'STRICT ANTI-HALLUCINATION RULES:\n' +
+      '1. NEVER invent fake employers, degrees, schools, dates, or certifications. Keep all factual identity and history 100% true to the original.\n' +
+      '2. Upgrade weak descriptions and passive voice into high-impact accomplishments starting with powerful action verbs (e.g. Spearheaded, Architected, Engineered, Optimized, Streamlined).\n' +
+      '3. Enhance clarity, conciseness, ATS keyword resonance, and executive tone.\n' +
+      '4. If the user provides custom refinement instructions, apply them precisely to improve the draft.\n' +
+      '5. Output ONLY valid JSON matching this schema (no markdown code blocks, pure JSON):\n' +
+      '{\n' +
+      '  "headline": string,\n' +
+      '  "summary": string,\n' +
+      '  "experience": [{ "position": string, "company": string, "location": string, "period": { "start": string, "end": string, "current": boolean }, "highlights": string[] }],\n' +
+      '  "education": [{ "institution": string, "degree": string, "period": { "start": string, "end": string } }],\n' +
+      '  "skills": [{ "name": string, "skills": string[] }],\n' +
+      '  "projects": [{ "name": string, "description": string, "highlights": string[] }],\n' +
+      '  "enhancementsSummary": string[]\n' +
+      '}',
+  }),
 };

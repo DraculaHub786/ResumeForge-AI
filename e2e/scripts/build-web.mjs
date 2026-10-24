@@ -51,4 +51,8 @@ if (build.status !== 0) {
   process.exit(build.status ?? 1);
 }
 
+try {
+  fs.writeFileSync(path.join(webDir, '.next', 'e2e-built-api-url.txt'), env.NEXT_PUBLIC_API_URL, 'utf8');
+} catch {}
+
 console.log('[e2e] Web build completed successfully.');

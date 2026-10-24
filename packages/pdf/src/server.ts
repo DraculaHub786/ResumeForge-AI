@@ -27,6 +27,29 @@ interface Cursor {
 
 const PT_PER_INCH = 72;
 
+/**
+ * Sanitize text to ensure it can be safely encoded by standard WinAnsi / Helvetica
+ * without throwing Encoding errors (e.g. 0x2011 non-breaking hyphen, curly quotes).
+ */
+export function safeWinAnsi(text: string | undefined | null): string {
+  if (!text) return '';
+  return String(text)
+    .replace(/[\u2010\u2011\u2012]/g, '-')
+    .replace(/\u2013/g, '-')
+    .replace(/[\u2014\u2015]/g, '--')
+    .replace(/[\u2018\u2019\u201A\u201B]/g, "'")
+    .replace(/[\u201C\u201D\u201E\u201F]/g, '"')
+    .replace(/[\u00A0\u2000-\u200B\u202F\u205F\u3000]/g, ' ')
+    .replace(/[\u2022\u2023\u25E6\u2043\u2219]/g, '-')
+    .replace(/\u2026/g, '...')
+    .normalize('NFKD')
+    .replace(/[^\x20-\x7E]/g, (char) => {
+      const code = char.charCodeAt(0);
+      if (code >= 0xC0 && code <= 0xFF) return char;
+      return '';
+    });
+}
+
 /** Parse a `#rrggbb` colour into an rgb() tuple, with a safe fallback. */
 function hexToRgb(hex: string | undefined, fallback = rgb(0, 0, 0)) {
   if (!hex) return fallback;
@@ -89,12 +112,14 @@ export async function resumeToPdf(
 
   /** Wrap a string to the available width, breaking on spaces. */
   const wrap = (text: string, maxWidth: number, f: PDFFont, size: number) => {
-    const words = text.split(/\s+/).filter(Boolean);
+    const clean = safeWinAnsi(text);
+    const words = clean.split(/\s+/).filter(Boolean);
     const out: string[] = [];
     let current = '';
     for (const word of words) {
       const candidate = current ? `${current} ${word}` : word;
-      if (f.widthOfTextAtSize(candidate, size) <= maxWidth) {
+      const candidateClean = safeWinAnsi(candidate);
+      if (f.widthOfTextAtSize(candidateClean, size) <= maxWidth) {
         current = candidate;
       } else {
         if (current) out.push(current);
@@ -103,6 +128,33 @@ export async function resumeToPdf(
     }
     if (current) out.push(current);
     return out.length ? out : [''];
+  };
+
+  const drawText = (
+    text: string,
+    x: number,
+    y: number,
+    opts: {
+      font?: PDFFont;
+      size?: number;
+      color?: ReturnType<typeof rgb>;
+    } = {}
+  ) => {
+    const clean = safeWinAnsi(text);
+    if (!clean) return;
+    cursor.page.drawText(clean, {
+      x,
+      y,
+      size: opts.size ?? bodySize,
+      font: opts.font ?? font,
+      color: opts.color ?? textColor,
+    });
+  };
+
+  const textWidth = (text: string, f: PDFFont, size: number) => {
+    const clean = safeWinAnsi(text);
+    if (!clean) return 0;
+    return f.widthOfTextAtSize(clean, size);
   };
 
   const drawLine = (
@@ -115,17 +167,17 @@ export async function resumeToPdf(
       gap?: number;
     } = {}
   ) => {
+    const clean = safeWinAnsi(text);
+    if (!clean) return;
     const f = opts.font ?? font;
     const size = opts.size ?? bodySize;
     const indent = opts.indent ?? 0;
     const gap = opts.gap ?? lineHeight;
     const maxWidth = pageWidth - margin * 2 - indent;
 
-    for (const line of wrap(text, maxWidth, f, size)) {
+    for (const line of wrap(clean, maxWidth, f, size)) {
       ensureRoom(gap);
-      cursor.page.drawText(line, {
-        x: margin + indent,
-        y: cursor.y,
+      drawText(line, margin + indent, cursor.y, {
         size,
         font: f,
         color: opts.color ?? textColor,
@@ -138,9 +190,7 @@ export async function resumeToPdf(
     ensureRoom(34);
     cursor.y -= 8;
     const label = theme?.uppercaseHeadings ? title.toUpperCase() : title;
-    cursor.page.drawText(label, {
-      x: margin,
-      y: cursor.y,
+    drawText(label, margin, cursor.y, {
       size: 11.5,
       font: boldFont,
       color: accent,
@@ -158,17 +208,16 @@ export async function resumeToPdf(
   };
 
   const drawBullets = (items: string[]) => {
-    for (const item of items) {
-      if (!item?.trim()) continue;
+    for (const item of items ?? []) {
+      const clean = safeWinAnsi(item);
+      if (!clean?.trim()) continue;
       ensureRoom(lineHeight);
-      cursor.page.drawText('•', {
-        x: margin + 8,
-        y: cursor.y,
+      drawText('-', margin + 8, cursor.y, {
         size: bodySize,
         font,
         color: mutedColor,
       });
-      drawLine(item, { indent: 20, gap: lineHeight });
+      drawLine(clean, { indent: 20, gap: lineHeight });
     }
     cursor.y -= 2;
   };
@@ -176,22 +225,31 @@ export async function resumeToPdf(
   // ---------------------------------------------------------------------
   // Header
   // ---------------------------------------------------------------------
-  const profile = content.profile;
-  if (profile?.fullName) {
+  const rawProfile = (content as any).profile ?? (content as any).basics ?? {};
+  const fullName = rawProfile.fullName ?? rawProfile.name ?? '';
+  const headline = rawProfile.headline ?? rawProfile.title ?? rawProfile.label ?? '';
+  const email = rawProfile.email ?? '';
+  const phone = rawProfile.phone ?? '';
+  const location = typeof rawProfile.location === 'string'
+    ? rawProfile.location
+    : rawProfile.location?.city
+      ? [rawProfile.location.city, rawProfile.location.region].filter(Boolean).join(', ')
+      : '';
+  const links = Array.isArray(rawProfile.links)
+    ? rawProfile.links.map((l: any) => l.label || l.url || '').filter(Boolean).join(', ')
+    : '';
+
+  if (fullName) {
     ensureRoom(60);
-    cursor.page.drawText(profile.fullName, {
-      x: margin,
-      y: cursor.y,
+    drawText(fullName, margin, cursor.y, {
       size: 20,
       font: boldFont,
       color: textColor,
     });
     cursor.y -= 22;
 
-    if (profile.headline) {
-      cursor.page.drawText(profile.headline, {
-        x: margin,
-        y: cursor.y,
+    if (headline) {
+      drawText(headline, margin, cursor.y, {
         size: 11.5,
         font: italicFont,
         color: accent,
@@ -199,12 +257,7 @@ export async function resumeToPdf(
       cursor.y -= 16;
     }
 
-    const contact = [
-      profile.email,
-      profile.phone,
-      profile.location,
-      profile.links?.map((l) => l.label).join(', '),
-    ]
+    const contact = [email, phone, location, links]
       .filter((v): v is string => !!v && v.trim().length > 0)
       .join(' | ');
 
@@ -228,18 +281,14 @@ export async function resumeToPdf(
     for (const item of content.experience) {
       ensureRoom(40);
       const period = formatPeriod(item.period);
-      cursor.page.drawText(item.position, {
-        x: margin,
-        y: cursor.y,
+      drawText(item.position, margin, cursor.y, {
         size: 11,
         font: boldFont,
         color: textColor,
       });
       if (period) {
-        const width = font.widthOfTextAtSize(period, 9.5);
-        cursor.page.drawText(period, {
-          x: pageWidth - margin - width,
-          y: cursor.y,
+        const width = textWidth(period, font, 9.5);
+        drawText(period, pageWidth - margin - width, cursor.y, {
           size: 9.5,
           font,
           color: mutedColor,
@@ -261,18 +310,14 @@ export async function resumeToPdf(
     for (const item of content.education) {
       ensureRoom(30);
       const period = formatPeriod(item.period);
-      cursor.page.drawText(item.institution, {
-        x: margin,
-        y: cursor.y,
+      drawText(item.institution, margin, cursor.y, {
         size: 11,
         font: boldFont,
         color: textColor,
       });
       if (period) {
-        const width = font.widthOfTextAtSize(period, 9.5);
-        cursor.page.drawText(period, {
-          x: pageWidth - margin - width,
-          y: cursor.y,
+        const width = textWidth(period, font, 9.5);
+        drawText(period, pageWidth - margin - width, cursor.y, {
           size: 9.5,
           font,
           color: mutedColor,
@@ -290,28 +335,23 @@ export async function resumeToPdf(
     for (const group of content.skills) {
       ensureRoom(20);
       const label = `${group.name}: `;
-      cursor.page.drawText(label, {
-        x: margin,
-        y: cursor.y,
+      drawText(label, margin, cursor.y, {
         size: bodySize,
         font: boldFont,
         color: textColor,
       });
-      const labelWidth = boldFont.widthOfTextAtSize(label, bodySize);
-      const value = group.skills.join(', ');
+      const labelWidth = textWidth(label, boldFont, bodySize);
+      const value = group.skills?.join(', ') ?? '';
       const maxWidth = pageWidth - margin * 2 - labelWidth;
       const lines = wrap(value, maxWidth, font, bodySize);
-      lines.forEach((line, i) => {
+      lines.forEach((line) => {
         ensureRoom(lineHeight);
-        cursor.page.drawText(line, {
-          x: margin + labelWidth,
-          y: cursor.y,
+        drawText(line, margin + labelWidth, cursor.y, {
           size: bodySize,
           font,
           color: textColor,
         });
         cursor.y -= lineHeight;
-        void i;
       });
       cursor.y -= 2;
     }
@@ -321,9 +361,7 @@ export async function resumeToPdf(
     drawSectionHeading('Projects');
     for (const item of content.projects) {
       ensureRoom(34);
-      cursor.page.drawText(item.name, {
-        x: margin,
-        y: cursor.y,
+      drawText(item.name, margin, cursor.y, {
         size: 11,
         font: boldFont,
         color: textColor,
@@ -344,7 +382,7 @@ export async function resumeToPdf(
     drawSectionHeading('Certifications');
     drawBullets(
       content.certifications.map((c) =>
-        [c.name, c.issuer, c.date].filter(Boolean).join(' — ')
+        [c.name, c.issuer, c.date].filter(Boolean).join(' - ')
       )
     );
   }
@@ -353,7 +391,7 @@ export async function resumeToPdf(
     drawSectionHeading('Publications');
     drawBullets(
       content.publications.map((p) =>
-        [p.title, p.publisher, p.date].filter(Boolean).join(' — ')
+        [p.title, p.publisher, p.date].filter(Boolean).join(' - ')
       )
     );
   }
@@ -362,7 +400,7 @@ export async function resumeToPdf(
     drawSectionHeading('Languages');
     drawBullets(
       content.languages.map((l) =>
-        [l.name, l.proficiency].filter(Boolean).join(' — ')
+        [l.name, l.proficiency].filter(Boolean).join(' - ')
       )
     );
   }
@@ -371,9 +409,7 @@ export async function resumeToPdf(
     drawSectionHeading('Volunteer Work');
     for (const item of content.volunteer) {
       ensureRoom(30);
-      cursor.page.drawText(item.role, {
-        x: margin,
-        y: cursor.y,
+      drawText(item.role, margin, cursor.y, {
         size: 11,
         font: boldFont,
         color: textColor,
