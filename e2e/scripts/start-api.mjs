@@ -47,12 +47,16 @@ for (const file of ['e2e.db', 'e2e.db-journal', 'e2e.db-wal', 'e2e.db-shm']) {
 }
 
 // Create the schema from the Drizzle models.
-const push = spawnSync('pnpm exec drizzle-kit push --force', {
-  cwd: serverDir,
-  env,
-  stdio: 'inherit',
-  shell: isWindows,
-});
+const push = spawnSync(
+  isWindows ? 'pnpm.cmd' : 'pnpm',
+  ['exec', 'drizzle-kit', 'push', '--force'],
+  {
+    cwd: serverDir,
+    env,
+    stdio: 'inherit',
+    shell: isWindows,
+  }
+);
 
 if (push.status !== 0) {
   console.error('[e2e] Failed to prepare the e2e database.');
@@ -61,12 +65,16 @@ if (push.status !== 0) {
 
 console.log(`[e2e] API server starting on http://localhost:${API_PORT}`);
 
-const server = spawn('pnpm exec tsx src/index.ts', {
-  cwd: serverDir,
-  env,
-  stdio: 'inherit',
-  shell: isWindows,
-});
+const server = spawn(
+  isWindows ? 'pnpm.cmd' : 'pnpm',
+  ['exec', 'tsx', 'src/index.ts'],
+  {
+    cwd: serverDir,
+    env,
+    stdio: 'inherit',
+    shell: isWindows,
+  }
+);
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
   process.on(signal, () => server.kill('SIGTERM'));
