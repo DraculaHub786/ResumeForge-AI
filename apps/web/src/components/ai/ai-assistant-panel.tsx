@@ -456,7 +456,7 @@ export function AiAssistantPanel({ draft, updateDraft }: AiAssistantPanelProps) 
                     <button
                       key={p.id}
                       type="button"
-                      onClick={() => setEnhancePreset(p.id as any)}
+                      onClick={() => setEnhancePreset(p.id as 'impact' | 'executive' | 'ats' | 'concise')}
                       className={`p-2.5 rounded-xl border text-left transition-all ${
                         enhancePreset === p.id
                           ? 'border-orange-500 bg-orange-500/10 text-orange-950 dark:text-orange-200 font-semibold shadow-xs'

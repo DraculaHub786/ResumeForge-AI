@@ -46,6 +46,10 @@ jobs:
         id: release
         run: echo "tag=${{ inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve repository name (lowercase)
+        id: repo
+        run: echo "name=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
       - name: Build and push the API image
         uses: docker/build-push-action@v6
         with:
@@ -53,8 +57,8 @@ jobs:
           file: docker/Dockerfile.server
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}-server:latest
-            ghcr.io/${{ github.repository }}-server:${{ steps.release.outputs.tag }}
+            ghcr.io/${{ steps.repo.outputs.name }}-server:latest
+            ghcr.io/${{ steps.repo.outputs.name }}-server:${{ steps.release.outputs.tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -65,8 +69,8 @@ jobs:
           file: docker/Dockerfile.web
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}-web:latest
-            ghcr.io/${{ github.repository }}-web:${{ steps.release.outputs.tag }}
+            ghcr.io/${{ steps.repo.outputs.name }}-web:latest
+            ghcr.io/${{ steps.repo.outputs.name }}-web:${{ steps.release.outputs.tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -75,6 +79,6 @@ jobs:
           {
             echo "## Container images published"
             echo ""
-            echo "- \`ghcr.io/${{ github.repository }}-server:${{ steps.release.outputs.tag }}\`"
-            echo "- \`ghcr.io/${{ github.repository }}-web:${{ steps.release.outputs.tag }}\`"
+            echo "- \`ghcr.io/${{ steps.repo.outputs.name }}-server:${{ steps.release.outputs.tag }}\`"
+            echo "- \`ghcr.io/${{ steps.repo.outputs.name }}-web:${{ steps.release.outputs.tag }}\`"
           } >> "$GITHUB_STEP_SUMMARY"

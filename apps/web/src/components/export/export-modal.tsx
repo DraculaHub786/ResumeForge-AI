@@ -19,7 +19,6 @@ import {
 import { FileText, FileType, Image, Code2, Download, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import {
-  exportPdf,
   exportPdfCanvas,
   exportServerPdf,
   exportPng,

@@ -25,9 +25,8 @@ import {
   Terminal,
   Zap,
   Sparkles,
-  RotateCcw,
 } from 'lucide-react';
-import { createEmptyContent, type ResumeDraft, type Theme } from '@resume-builder/types';
+import { createEmptyContent, type ResumeDraft, type Theme, type ResumeContent } from '@resume-builder/types';
 import {
   resumeToLatexFromMetadata,
   compileLatexDocument,
@@ -175,7 +174,7 @@ export function LatexEditorPanel({ draft, theme: _theme, template: _template, up
   };
 
   const handleResetFromForm = () => {
-    const freshLatex = resumeToLatexFromMetadata(draft.content || ({} as any), draft.metadata);
+    const freshLatex = resumeToLatexFromMetadata(draft.content || ({} as ResumeContent), draft.metadata);
     setLatexSource(freshLatex);
     lastSelfCompiledContentJsonRef.current = JSON.stringify(draft.content || {});
     setIsCustomEdited(false);

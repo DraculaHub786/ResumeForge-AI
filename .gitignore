@@ -74,7 +74,7 @@ venv
 
 # Legacy prototype
 app.py
-templates
+/templates/
 
 # Misc & temporary
 *.pem

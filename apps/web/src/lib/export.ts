@@ -26,14 +26,6 @@ export { buildExportFilename, triggerFileSave };
 
 export type ExportFormat = 'pdf' | 'docx' | 'png' | 'latex';
 
-function triggerDownload(blob: Blob, filename: string) {
-  triggerFileSave(blob, filename);
-}
-
-function safeFilename(title: string, ext: string) {
-  return buildExportFilename(null, title, ext);
-}
-
 // ---------------------------------------------------------------------------
 // PDF
 // ---------------------------------------------------------------------------
